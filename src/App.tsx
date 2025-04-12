@@ -1,5 +1,7 @@
+import MapPage from 'pages/MapPage';
+
 const App = () => {
-  return <div>hello</div>;
+  return <MapPage />;
 };
 
 export default App;
