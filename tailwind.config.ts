@@ -53,6 +53,11 @@ export default {
       popup: '999',
       floating: '1000',
     },
+    extend: {
+      colors: {
+        primary: '#6348FA',
+      },
+    },
   },
   plugins: [],
 };
