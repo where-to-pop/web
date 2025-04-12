@@ -23,7 +23,8 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "types": ["vite/client"]
   },
   "include": ["src"]
 }

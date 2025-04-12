@@ -1,6 +1,11 @@
+import { CATEGORIES } from 'constants/categories';
 import { AREA_COORDS, GUNGU_COORDS } from 'constants/regions';
 import { useCallback, useEffect, useRef } from 'react';
-import { createAreaMarker, createGunguMarker } from 'utils/map.util';
+import {
+  createAreaMarker,
+  createBuildingMarker,
+  createGunguMarker,
+} from 'utils/map.util';
 
 const ZOOM_LEVEL_LIMIT = {
   gungu: 8,
@@ -15,6 +20,7 @@ const Map = () => {
   const map = useRef<kakao.maps.Map | null>(null);
   const gunguMarkers = useRef<kakao.maps.CustomOverlay[]>([]);
   const areaMarkers = useRef<kakao.maps.CustomOverlay[]>([]);
+  const buildingMarkers = useRef<kakao.maps.CustomOverlay[]>([]);
 
   const initializeMap = useCallback(async () => {
     if (window.kakao && mapRef.current) {
@@ -28,6 +34,7 @@ const Map = () => {
 
       initializeGunguMarkers();
       initializeAreaMarkers();
+      initializeBuildingMarkers();
 
       kakao.maps.event.addListener(map.current, 'zoom_changed', () => {
         const zoomLevel = newMap.getLevel();
@@ -37,7 +44,9 @@ const Map = () => {
   }, []);
 
   const initializeGunguMarkers = useCallback(() => {
-    const gunguWithCoords = Object.entries(GUNGU_COORDS).slice(0, 6);
+    const gunguWithCoords = Object.entries(GUNGU_COORDS)
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 6);
     gunguWithCoords.forEach(([gungu, coordinates], index) => {
       const position = new kakao.maps.LatLng(
         coordinates.latitude,
@@ -56,7 +65,7 @@ const Map = () => {
 
   const initializeAreaMarkers = useCallback(() => {
     const areaWithCoords = Object.entries(AREA_COORDS);
-    areaWithCoords.forEach(([area, coordinates], index) => {
+    areaWithCoords.forEach(([area, coordinates]) => {
       const position = new kakao.maps.LatLng(
         coordinates.latitude,
         coordinates.longitude,
@@ -73,12 +82,33 @@ const Map = () => {
     });
   }, []);
 
+  const initializeBuildingMarkers = useCallback(() => {
+    MOCK_BUILDING_COORDS.forEach(([latitude, longitude]) => {
+      const randomCategory =
+        CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)];
+
+      const position = new kakao.maps.LatLng(latitude, longitude);
+      const buildingMarker = createBuildingMarker(randomCategory);
+      const customOverlay = new kakao.maps.CustomOverlay({
+        position: position,
+        content: buildingMarker,
+        clickable: true,
+      });
+      customOverlay.setMap(map.current);
+      customOverlay.setVisible(false);
+      buildingMarkers.current.push(customOverlay);
+    });
+  }, []);
+
   const handleZoomChanged = useCallback((zoomLevel: number) => {
     if (zoomLevel > ZOOM_LEVEL_LIMIT.area) {
       gunguMarkers.current.forEach((marker) => {
         marker.setVisible(true);
       });
       areaMarkers.current.forEach((marker) => {
+        marker.setVisible(false);
+      });
+      buildingMarkers.current.forEach((marker) => {
         marker.setVisible(false);
       });
     } else if (zoomLevel > ZOOM_LEVEL_LIMIT.building) {
@@ -88,12 +118,18 @@ const Map = () => {
       areaMarkers.current.forEach((marker) => {
         marker.setVisible(true);
       });
+      buildingMarkers.current.forEach((marker) => {
+        marker.setVisible(false);
+      });
     } else {
       gunguMarkers.current.forEach((marker) => {
         marker.setVisible(false);
       });
       areaMarkers.current.forEach((marker) => {
         marker.setVisible(false);
+      });
+      buildingMarkers.current.forEach((marker) => {
+        marker.setVisible(true);
       });
     }
   }, []);
@@ -113,3 +149,21 @@ const Map = () => {
 };
 
 export default Map;
+
+const MOCK_BUILDING_COORDS = [
+  [37.54343390490632, 127.05174586952529],
+  [37.54323537558675, 127.0524472925928],
+  [37.54311807419734, 127.05283193642344],
+  [37.5434696805452, 127.05234561701565],
+  [37.54405479726204, 127.05353416540369],
+  [37.54402043881545, 127.04968683441979],
+  [37.54259725624128, 127.04873539698823],
+  [37.543063646933355, 127.05364661131054],
+  [37.54262139526008, 127.05529834216931],
+  [37.54250447645044, 127.05484564070186],
+  [37.54138688278711, 127.0556029410406],
+  [37.54127928500763, 127.05448265706279],
+  [37.541549730574054, 127.0541660273163],
+  [37.54071122894428, 127.05539876737014],
+  [37.54372912125293, 127.05636282325551],
+];
