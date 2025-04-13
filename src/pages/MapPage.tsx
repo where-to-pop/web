@@ -46,9 +46,13 @@ const Map = () => {
   }, []);
 
   const initializeGunguMarkers = useCallback(() => {
+    if (!map.current) {
+      return;
+    }
     const gunguWithCoords = Object.entries(GUNGU_COORDS)
       .sort(() => Math.random() - 0.5)
       .slice(0, 6);
+
     gunguWithCoords.forEach(([gungu, coordinates], index) => {
       const position = new kakao.maps.LatLng(
         coordinates.latitude,
@@ -60,12 +64,21 @@ const Map = () => {
         content: gunguMarker,
         clickable: true,
       });
+
+      gunguMarker.addEventListener('click', () => {
+        // @ts-expect-error 카카오 지도 타입 패키지 미업데이트로 인한 오류
+        map.current.jump(position, ZOOM_LEVEL_LIMIT.area, { animate: true });
+      });
+
       customOverlay.setMap(map.current);
       gunguMarkers.current.push(customOverlay);
     });
   }, []);
 
   const initializeAreaMarkers = useCallback(() => {
+    if (!map.current) {
+      return;
+    }
     const areaWithCoords = Object.entries(AREA_COORDS);
     areaWithCoords.forEach(([area, coordinates]) => {
       const position = new kakao.maps.LatLng(
@@ -78,6 +91,14 @@ const Map = () => {
         content: areaMarker,
         clickable: true,
       });
+
+      areaMarker.addEventListener('click', () => {
+        // @ts-expect-error 카카오 지도 타입 패키지 미업데이트로 인한 오류
+        map.current.jump(position, ZOOM_LEVEL_LIMIT.building, {
+          animate: true,
+        });
+      });
+
       customOverlay.setMap(map.current);
       customOverlay.setVisible(false);
       areaMarkers.current.push(customOverlay);
@@ -91,9 +112,22 @@ const Map = () => {
     const clusterer = new kakao.maps.MarkerClusterer({
       averageCenter: true,
       minLevel: 3,
+      disableClickZoom: true,
     });
     clusterer.setStyles(BUILDING_CLUSTER_STYLES);
     clusterer.setCalculator([5, 10, 15]);
+
+    kakao.maps.event.addListener(clusterer, 'clusterclick', (cluster: any) => {
+      if (!map.current) {
+        return;
+      }
+      const position = cluster.getCenter();
+      const level = map.current.getLevel() - 1;
+      // @ts-expect-error 카카오 지도 타입 패키지 미업데이트로 인한 오류
+      map.current.jump(position, level, {
+        animate: true,
+      });
+    });
 
     buildingClusterer.current = clusterer;
 
