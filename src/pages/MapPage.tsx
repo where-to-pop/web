@@ -230,7 +230,7 @@ const Map = () => {
   }, []);
 
   return (
-    <main className='relative h-screen w-screen'>
+    <main className='relative h-full w-full'>
       <div ref={mapRef} className='h-full w-full' />
       {selectedArea && <AreaTab area={selectedArea} />}
       {selectedBuilding && <BuildingTab address={selectedBuilding} />}
