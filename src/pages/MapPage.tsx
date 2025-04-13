@@ -1,4 +1,3 @@
-import Tab from 'src/components/building-tab/BuildingTab';
 import { CATEGORIES } from 'src/constants/category.const';
 import {
   ZOOM_LEVEL_LIMIT,
@@ -11,6 +10,7 @@ import {
   createBuildingMarker,
   createGunguMarker,
 } from 'src/utils/map.util';
+import AreaTab from 'src/components/area-tab/AreaTab';
 
 const Map = () => {
   const isInitialized = useRef(false);
@@ -195,7 +195,7 @@ const Map = () => {
   return (
     <main className='relative h-screen w-screen'>
       <div ref={mapRef} className='h-full w-full' />
-      <Tab />
+      <AreaTab />
     </main>
   );
 };
