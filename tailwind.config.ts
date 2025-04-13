@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
+import { extendTailwindMerge } from 'tailwind-merge';
+
 const createPxEntries = (size: number) => {
   return {
     0: '0',
@@ -11,7 +13,7 @@ const createPxEntries = (size: number) => {
 
 const PX_ENTRIES = createPxEntries(500);
 
-export default {
+const config = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     spacing: PX_ENTRIES,
@@ -53,11 +55,48 @@ export default {
       popup: '999',
       floating: '1000',
     },
-    extend: {
-      colors: {
-        primary: '#6348FA',
+    colors: {
+      transparent: 'transparent',
+      primary: 'rgb(var(--primary) / <alpha-value>)',
+      white: 'rgb(var(--white) / <alpha-value>)',
+      black: 'rgb(var(--black) / <alpha-value>)',
+      grey: {
+        50: 'rgb(var(--grey-50) / <alpha-value>)',
+        100: 'rgb(var(--grey-100) / <alpha-value>)',
+        200: 'rgb(var(--grey-200) / <alpha-value>)',
+        300: 'rgb(var(--grey-300) / <alpha-value>)',
+        400: 'rgb(var(--grey-400) / <alpha-value>)',
+        500: 'rgb(var(--grey-500) / <alpha-value>)',
+        600: 'rgb(var(--grey-600) / <alpha-value>)',
+        700: 'rgb(var(--grey-700) / <alpha-value>)',
       },
     },
   },
   plugins: [],
 };
+
+export default config;
+
+const flattenColors = (colors: object, prefix = ''): string[] => {
+  return Object.entries(colors).reduce((acc: string[], [key, value]) => {
+    if (typeof value === 'object') {
+      return [
+        ...acc,
+        ...flattenColors(value, prefix ? `${prefix}.${key}` : key),
+      ];
+    }
+    return [...acc, prefix ? `${prefix}.${key}` : key];
+  }, []);
+};
+
+export const customTwMerge = extendTailwindMerge({
+  extend: {
+    classGroups: {
+      'font-size': [{ text: Object.keys(config.theme?.fontSize ?? {}) }],
+      'font-weight': [{ font: Object.keys(config.theme?.fontWeight ?? {}) }],
+      'bg-color': [{ bg: flattenColors(config.theme?.colors ?? {}) }],
+      'text-color': [{ text: flattenColors(config.theme?.colors ?? {}) }],
+      'border-color': [{ border: flattenColors(config.theme?.colors ?? {}) }],
+    },
+  },
+});

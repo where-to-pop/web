@@ -1,4 +1,4 @@
-import { CATEGORIES_WITH_INFO, Category } from 'constants/category.const';
+import { CATEGORIES_WITH_INFO, Category } from 'src/constants/category.const';
 
 // 군구 마커 생성 (랭킹이 1에 가까울 수록 더 크고 진하게 표시)
 export const createGunguMarker = (name: string, ranking: number) => {

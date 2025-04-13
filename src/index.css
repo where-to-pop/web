@@ -2,8 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --white: 255 255 255;
+  --black: 24 31 41;
+
+  --grey-50: 247 248 249;
+  --grey-100: 243 243 243;
+  --grey-200: 230 230 230;
+  --grey-300: 204 204 204;
+  --grey-400: 179 179 179;
+  --grey-500: 153 153 153;
+  --grey-600: 128 128 128;
+  --grey-700: 77 77 77;
+
+  --primary: 99 72 250;
+}
+
 @layer base {
   body {
-    @apply text-14 font-400;
+    @apply text-14 font-400 text-black;
   }
 }

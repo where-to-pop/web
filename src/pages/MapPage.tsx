@@ -1,12 +1,16 @@
-import { CATEGORIES } from 'constants/category.const';
-import { ZOOM_LEVEL_LIMIT, BUILDING_CLUSTER_STYLES } from 'constants/map.const';
-import { AREA_COORDS, GUNGU_COORDS } from 'constants/regions.const';
+import Tab from 'src/components/building-tab/BuildingTab';
+import { CATEGORIES } from 'src/constants/category.const';
+import {
+  ZOOM_LEVEL_LIMIT,
+  BUILDING_CLUSTER_STYLES,
+} from 'src/constants/map.const';
+import { AREA_COORDS, GUNGU_COORDS } from 'src/constants/regions.const';
 import { useCallback, useEffect, useRef } from 'react';
 import {
   createAreaMarker,
   createBuildingMarker,
   createGunguMarker,
-} from 'utils/map.util';
+} from 'src/utils/map.util';
 
 const Map = () => {
   const isInitialized = useRef(false);
@@ -191,6 +195,7 @@ const Map = () => {
   return (
     <main className='relative h-screen w-screen'>
       <div ref={mapRef} className='h-full w-full' />
+      <Tab />
     </main>
   );
 };

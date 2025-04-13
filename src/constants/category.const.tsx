@@ -6,7 +6,7 @@ import {
   IconArt,
   IconCharacter,
   IconOther,
-} from 'assets/icons';
+} from 'src/assets/icons';
 import { ReactNode } from 'react';
 
 export type Category = (typeof CATEGORIES)[number];

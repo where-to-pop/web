@@ -23,8 +23,8 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "types": ["vite/client"]
   },
-  "include": ["src"]
+  "include": ["src", "tailwind.config.ts"]
 }
