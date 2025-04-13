@@ -193,11 +193,11 @@ const Map = () => {
   }, []);
 
   const handleZoomChanged = useCallback((zoomLevel: number) => {
+    selectedMarker.current?.setVisible(false);
     if (zoomLevel > ZOOM_LEVEL_LIMIT.area) {
       selectedAreaRef.current = null;
       setSelectedArea(null);
       setSelectedBuilding(null);
-      selectedMarker.current?.setVisible(false);
       areaNotificationBubble.current?.setVisible(false);
       gunguMarkers.current.forEach((marker) => {
         marker.setVisible(true);
@@ -211,7 +211,6 @@ const Map = () => {
       buildingClusterer.current?.setMap(null);
     } else if (zoomLevel > ZOOM_LEVEL_LIMIT.building) {
       setSelectedBuilding(null);
-      selectedMarker.current?.setVisible(false);
       gunguMarkers.current.forEach((marker) => {
         marker.setVisible(false);
       });
