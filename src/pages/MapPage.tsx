@@ -1,18 +1,12 @@
-import { CATEGORIES } from 'constants/categories';
-import { AREA_COORDS, GUNGU_COORDS } from 'constants/regions';
+import { CATEGORIES } from 'constants/category.const';
+import { ZOOM_LEVEL_LIMIT, BUILDING_CLUSTER_STYLES } from 'constants/map.const';
+import { AREA_COORDS, GUNGU_COORDS } from 'constants/regions.const';
 import { useCallback, useEffect, useRef } from 'react';
 import {
-  BUILDING_CLUSTER_STYLES,
   createAreaMarker,
   createBuildingMarker,
   createGunguMarker,
 } from 'utils/map.util';
-
-const ZOOM_LEVEL_LIMIT = {
-  gungu: 8,
-  area: 6,
-  building: 4,
-};
 
 const Map = () => {
   const isInitialized = useRef(false);
