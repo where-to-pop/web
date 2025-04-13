@@ -9,9 +9,12 @@ import {
   createAreaMarker,
   createBuildingMarker,
   createGunguMarker,
+  createNotificationBubble,
 } from 'src/utils/map.util';
 import AreaTab from 'src/components/area-tab/AreaTab';
 import BuildingTab from 'src/components/building-tab/BuildingTab';
+import SearchInput from 'src/components/SearchInput';
+import NotificationBubble from 'src/components/NotificationBubble';
 
 const Map = () => {
   const isInitialized = useRef(false);
@@ -23,6 +26,7 @@ const Map = () => {
   const buildingMarkers = useRef<kakao.maps.CustomOverlay[]>([]);
   const buildingClusterer = useRef<kakao.maps.MarkerClusterer | null>(null);
   const selectedMarker = useRef<kakao.maps.Marker | null>(null);
+  const areaNotificationBubble = useRef<kakao.maps.CustomOverlay | null>(null);
 
   // NOTE: 이벤트 리스너 내에서 변수 값을 읽기 위해 ref와 state를 둘 다 사용
   const selectedAreaRef = useRef<(typeof AREAS)[number] | null>(null);
@@ -80,6 +84,16 @@ const Map = () => {
   }, []);
 
   const initializeAreaMarkers = useCallback((map: kakao.maps.Map) => {
+    const notificationBubble = new kakao.maps.CustomOverlay({
+      position: new kakao.maps.LatLng(37.545, 126.99),
+      content: createNotificationBubble(),
+      yAnchor: 1,
+      zIndex: 100,
+    });
+    notificationBubble.setMap(map);
+    notificationBubble.setVisible(false);
+    areaNotificationBubble.current = notificationBubble;
+
     const areaWithCoords = Object.entries(AREA_COORDS);
     areaWithCoords.forEach(([area, coordinates]) => {
       const position = new kakao.maps.LatLng(
@@ -113,6 +127,8 @@ const Map = () => {
           coordinates.longitude + offset,
         );
         map.panTo(shiftedPosition);
+        notificationBubble.setPosition(position);
+        notificationBubble.setVisible(true);
       });
 
       customOverlay.setMap(map);
@@ -183,6 +199,7 @@ const Map = () => {
       setSelectedArea(null);
       setSelectedBuilding(null);
       selectedMarker.current?.setVisible(false);
+      areaNotificationBubble.current?.setVisible(false);
       gunguMarkers.current.forEach((marker) => {
         marker.setVisible(true);
       });
@@ -209,6 +226,7 @@ const Map = () => {
     } else {
       selectedAreaRef.current = null;
       setSelectedArea(null);
+      areaNotificationBubble.current?.setVisible(false);
       gunguMarkers.current.forEach((marker) => {
         marker.setVisible(false);
       });
@@ -232,6 +250,7 @@ const Map = () => {
   return (
     <main className='relative h-full w-full'>
       <div ref={mapRef} className='h-full w-full' />
+      <SearchInput />
       {selectedArea && <AreaTab area={selectedArea} />}
       {selectedBuilding && <BuildingTab address={selectedBuilding} />}
     </main>

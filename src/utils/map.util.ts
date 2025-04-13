@@ -42,3 +42,26 @@ export const createBuildingMarker = (category: Category) => {
 
   return content;
 };
+
+export const createNotificationBubble = () => {
+  const content = document.createElement('div');
+  content.className =
+    'flex items-center gap-[2px] whitespace-nowrap break-keep rounded-full bg-red/70 px-8 py-[6px] text-12 font-600 text-white mb-[30px]';
+
+  const notificationIcon = document.createElement('div');
+  notificationIcon.className = 'w-16 h-12';
+  notificationIcon.innerHTML = `<img src='src/assets/icons/notification.svg' />`;
+  content.appendChild(notificationIcon);
+
+  const text = document.createElement('div');
+  text.textContent = '한번 더 클릭하여 확대해보세요!';
+  content.appendChild(text);
+
+  const triangleIcon = document.createElement('div');
+  triangleIcon.className =
+    'w-24 h-12 absolute top-[18px] left-1/2 -translate-x-1/2 translate-y-full';
+  triangleIcon.innerHTML = `<img src='src/assets/icons/triangle.svg' />`;
+  content.appendChild(triangleIcon);
+
+  return content;
+};

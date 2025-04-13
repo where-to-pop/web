@@ -57,7 +57,6 @@ const config = {
     },
     colors: {
       transparent: 'transparent',
-      primary: 'rgb(var(--primary) / <alpha-value>)',
       white: 'rgb(var(--white) / <alpha-value>)',
       black: 'rgb(var(--black) / <alpha-value>)',
       grey: {
@@ -70,6 +69,8 @@ const config = {
         600: 'rgb(var(--grey-600) / <alpha-value>)',
         700: 'rgb(var(--grey-700) / <alpha-value>)',
       },
+      primary: 'rgb(var(--primary) / <alpha-value>)',
+      red: 'rgb(var(--red) / <alpha-value>)',
     },
   },
   plugins: [],

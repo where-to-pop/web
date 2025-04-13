@@ -6,6 +6,9 @@ import IconArt from './art.svg?react';
 import IconCharacter from './character.svg?react';
 import IconMedia from './media.svg?react';
 import IconOther from './other.svg?react';
+import IconSearch from './search.svg?react';
+import IconNotification from './notification.svg?react';
+import IconTriangle from './triangle.svg?react';
 
 export {
   IconLogo,
@@ -16,4 +19,7 @@ export {
   IconCharacter,
   IconMedia,
   IconOther,
+  IconSearch,
+  IconNotification,
+  IconTriangle,
 };
