@@ -1,4 +1,3 @@
-import Article from 'src/components/Article';
 import Card from 'src/components/Card';
 import CustomLineChart from 'src/components/charts/CustomLineChart';
 import CustomPieChart from 'src/components/charts/CustomPieChart';

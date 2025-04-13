@@ -14,7 +14,6 @@ import {
 import AreaTab from 'src/components/area-tab/AreaTab';
 import BuildingTab from 'src/components/building-tab/BuildingTab';
 import SearchInput from 'src/components/SearchInput';
-import NotificationBubble from 'src/components/NotificationBubble';
 
 const Map = () => {
   const isInitialized = useRef(false);
