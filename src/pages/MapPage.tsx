@@ -2,6 +2,7 @@ import { CATEGORIES } from 'constants/categories';
 import { AREA_COORDS, GUNGU_COORDS } from 'constants/regions';
 import { useCallback, useEffect, useRef } from 'react';
 import {
+  BUILDING_CLUSTER_STYLES,
   createAreaMarker,
   createBuildingMarker,
   createGunguMarker,
@@ -21,6 +22,7 @@ const Map = () => {
   const gunguMarkers = useRef<kakao.maps.CustomOverlay[]>([]);
   const areaMarkers = useRef<kakao.maps.CustomOverlay[]>([]);
   const buildingMarkers = useRef<kakao.maps.CustomOverlay[]>([]);
+  const buildingClusterer = useRef<kakao.maps.MarkerClusterer | null>(null);
 
   const initializeMap = useCallback(async () => {
     if (window.kakao && mapRef.current) {
@@ -83,6 +85,18 @@ const Map = () => {
   }, []);
 
   const initializeBuildingMarkers = useCallback(() => {
+    if (!map.current) {
+      return;
+    }
+    const clusterer = new kakao.maps.MarkerClusterer({
+      averageCenter: true,
+      minLevel: 3,
+    });
+    clusterer.setStyles(BUILDING_CLUSTER_STYLES);
+    clusterer.setCalculator([5, 10, 15]);
+
+    buildingClusterer.current = clusterer;
+
     MOCK_BUILDING_COORDS.forEach(([latitude, longitude]) => {
       const randomCategory =
         CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)];
@@ -97,6 +111,8 @@ const Map = () => {
       customOverlay.setMap(map.current);
       customOverlay.setVisible(false);
       buildingMarkers.current.push(customOverlay);
+
+      clusterer.addMarker(customOverlay);
     });
   }, []);
 
@@ -111,6 +127,7 @@ const Map = () => {
       buildingMarkers.current.forEach((marker) => {
         marker.setVisible(false);
       });
+      buildingClusterer.current?.setMap(null);
     } else if (zoomLevel > ZOOM_LEVEL_LIMIT.building) {
       gunguMarkers.current.forEach((marker) => {
         marker.setVisible(false);
@@ -121,6 +138,7 @@ const Map = () => {
       buildingMarkers.current.forEach((marker) => {
         marker.setVisible(false);
       });
+      buildingClusterer.current?.setMap(null);
     } else {
       gunguMarkers.current.forEach((marker) => {
         marker.setVisible(false);
@@ -131,6 +149,7 @@ const Map = () => {
       buildingMarkers.current.forEach((marker) => {
         marker.setVisible(true);
       });
+      buildingClusterer.current?.setMap(map.current);
     }
   }, []);
 
