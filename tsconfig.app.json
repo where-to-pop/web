@@ -26,5 +26,5 @@
     "baseUrl": ".",
     "types": ["vite/client"]
   },
-  "include": ["src", "tailwind.config.ts"]
+  "include": ["src", "public", "tailwind.config.ts"]
 }

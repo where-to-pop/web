@@ -50,7 +50,7 @@ export const createNotificationBubble = () => {
 
   const notificationIcon = document.createElement('div');
   notificationIcon.className = 'w-16 h-12';
-  notificationIcon.innerHTML = `<img src='src/assets/icons/notification.svg' />`;
+  notificationIcon.innerHTML = `<img src='/icons/notification.svg' />`;
   content.appendChild(notificationIcon);
 
   const text = document.createElement('div');
@@ -60,7 +60,7 @@ export const createNotificationBubble = () => {
   const triangleIcon = document.createElement('div');
   triangleIcon.className =
     'w-24 h-12 absolute top-[18px] left-1/2 -translate-x-1/2 translate-y-full';
-  triangleIcon.innerHTML = `<img src='src/assets/icons/triangle.svg' />`;
+  triangleIcon.innerHTML = `<img src='/icons/triangle.svg' />`;
   content.appendChild(triangleIcon);
 
   return content;

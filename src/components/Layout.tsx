@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { IconLogo } from 'src/assets/icons';
+import { IconLogo } from 'public/icons';
 
 interface Props {
   children: ReactNode;
