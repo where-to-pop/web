@@ -1,5 +1,5 @@
+import { Message } from 'src/types/common';
 import Bubble from './Bubble';
-import { Message } from './SearchTab';
 import { useEffect, useRef } from 'react';
 
 interface Props {

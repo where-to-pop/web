@@ -1,14 +1,8 @@
-import { CATEGORIES } from 'src/constants/category.const';
-import {
-  ZOOM_LEVEL_LIMIT,
-  BUILDING_CLUSTER_STYLES,
-} from 'src/constants/map.const';
+import { ZOOM_LEVEL_LIMIT } from 'src/constants/map.const';
 import { AREA_COORDS, AREAS, GUNGU_COORDS } from 'src/constants/regions.const';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   createAreaMarker,
-  createBuildingMarker,
-  createGunguMarker,
   createNotificationBubble,
   setBuildingMarkers,
   setGunguMarkers,
