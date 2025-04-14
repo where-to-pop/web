@@ -19,9 +19,11 @@ const AreaSection = () => {
         <Card title='연령대' className='h-260 w-full'>
           <CustomPieChart data={MOCK_AGE_DATA} dataKey='value' />
         </Card>
-        <Card title='상주 인구 밀도' className='col-span-2 h-64 w-full'>
+        {/* TODO: 파이 차트로 변경 */}
+        <Card title='상주 및 비상주 인구' className='col-span-2 h-64 w-full'>
           높음
         </Card>
+        {/* TODO: 단일 숫자로 변경 */}
         <Card title='유동 인구' className='col-span-2 h-260 w-full'>
           <CustomLineChart
             data={MOCK_POPULATION_DATA}

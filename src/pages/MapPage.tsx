@@ -13,7 +13,7 @@ import {
 } from 'src/utils/map.util';
 import AreaTab from 'src/components/area-tab/AreaTab';
 import BuildingTab from 'src/components/building-tab/BuildingTab';
-import SearchInput from 'src/components/SearchInput';
+import SearchTab from 'src/components/search-tab/SearchTab';
 
 const Map = () => {
   const isInitialized = useRef(false);
@@ -248,7 +248,7 @@ const Map = () => {
   return (
     <main className='relative h-full w-full'>
       <div ref={mapRef} className='h-full w-full' />
-      <SearchInput />
+      <SearchTab />
       {selectedArea && <AreaTab area={selectedArea} />}
       {selectedBuilding && <BuildingTab address={selectedBuilding} />}
     </main>
