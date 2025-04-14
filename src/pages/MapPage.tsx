@@ -10,10 +10,13 @@ import {
   createBuildingMarker,
   createGunguMarker,
   createNotificationBubble,
+  setBuildingMarkers,
+  setGunguMarkers,
 } from 'src/utils/map.util';
 import AreaTab from 'src/components/area-tab/AreaTab';
 import BuildingTab from 'src/components/building-tab/BuildingTab';
 import SearchTab from 'src/components/search-tab/SearchTab';
+import { Message } from 'src/types/common';
 
 const Map = () => {
   const isInitialized = useRef(false);
@@ -60,26 +63,11 @@ const Map = () => {
       .sort(() => Math.random() - 0.5)
       .slice(0, 6);
 
-    gunguWithCoords.forEach(([gungu, coordinates], index) => {
-      const position = new kakao.maps.LatLng(
-        coordinates.latitude,
-        coordinates.longitude,
-      );
-      const gunguMarker = createGunguMarker(gungu, index + 1);
-      const customOverlay = new kakao.maps.CustomOverlay({
-        position: position,
-        content: gunguMarker,
-        clickable: true,
-      });
-
-      gunguMarker.addEventListener('click', () => {
-        // @ts-expect-error 카카오 지도 타입 패키지 미업데이트로 인한 오류
-        map.jump(position, ZOOM_LEVEL_LIMIT.area, { animate: true });
-      });
-
-      customOverlay.setMap(map);
-      gunguMarkers.current.push(customOverlay);
+    const newGunguMarkers = setGunguMarkers({
+      map,
+      gunguWithCoords,
     });
+    gunguMarkers.current = newGunguMarkers;
   }, []);
 
   const initializeAreaMarkers = useCallback((map: kakao.maps.Map) => {
@@ -137,62 +125,68 @@ const Map = () => {
   }, []);
 
   const initializeBuildingMarkers = useCallback((map: kakao.maps.Map) => {
-    // 클러스터
-    const clusterer = new kakao.maps.MarkerClusterer({
-      averageCenter: true,
-      minLevel: 3,
-      disableClickZoom: true,
-    });
-    clusterer.setStyles(BUILDING_CLUSTER_STYLES);
-    clusterer.setCalculator([5, 10, 15]);
-
-    kakao.maps.event.addListener(clusterer, 'clusterclick', (cluster: any) => {
-      const position = cluster.getCenter();
-      const level = map.getLevel() - 1;
-      // @ts-expect-error 카카오 지도 타입 패키지 미업데이트로 인한 오류
-      map.jump(position, level, {
-        animate: true,
-      });
+    const {
+      buildingClusterer: newBuildingClusterer,
+      selectedMarker: newSelectedMarker,
+      buildingMarkers: newBuildingMarkers,
+    } = setBuildingMarkers({
+      map,
+      buildings: MOCK_BUILDING_COORDS,
+      setSelectedBuilding,
     });
 
-    buildingClusterer.current = clusterer;
-
-    // 클릭 시 생성되는 마커
-    const marker = new kakao.maps.Marker({
-      position: new kakao.maps.LatLng(37.545, 126.99),
-      zIndex: 100,
-    });
-    marker.setMap(map);
-    marker.setVisible(false);
-    selectedMarker.current = marker;
-
-    // 빌딩 핀
-    MOCK_BUILDING_COORDS.forEach(([latitude, longitude, name]) => {
-      const randomCategory =
-        CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)];
-
-      const position = new kakao.maps.LatLng(latitude, longitude);
-      const buildingMarker = createBuildingMarker(randomCategory);
-      const customOverlay = new kakao.maps.CustomOverlay({
-        position: position,
-        content: buildingMarker,
-        clickable: true,
-      });
-      customOverlay.setMap(map);
-      customOverlay.setVisible(false);
-      buildingMarkers.current.push(customOverlay);
-
-      clusterer.addMarker(customOverlay);
-
-      buildingMarker.addEventListener('click', () => {
-        setSelectedBuilding(name);
-        marker.setPosition(position);
-        marker.setVisible(true);
-      });
-    });
+    buildingClusterer.current = newBuildingClusterer;
+    selectedMarker.current = newSelectedMarker;
+    buildingMarkers.current = newBuildingMarkers;
   }, []);
 
+  useEffect(() => {
+    if (!isInitialized.current) {
+      isInitialized.current = true;
+      initializeMap();
+    }
+  }, []);
+
+  // 검색
+  const [messages, setMessages] = useState<Message[]>([]);
+  const handleSetSearchMarkers = useCallback(() => {
+    if (!map.current) {
+      return;
+    }
+
+    gunguMarkers.current.forEach((marker) => {
+      marker.setVisible(false);
+    });
+    areaMarkers.current.forEach((marker) => {
+      marker.setVisible(false);
+    });
+    buildingMarkers.current.forEach((marker) => {
+      marker.setVisible(false);
+    });
+
+    const {
+      buildingClusterer: newBuildingClusterer,
+      selectedMarker: newSelectedMarker,
+      buildingMarkers: newBuildingMarkers,
+    } = setBuildingMarkers({
+      map: map.current,
+      buildings: MOCK_BUILDING_COORDS.slice(0, 5),
+      setSelectedBuilding,
+      defaultVisible: true,
+    });
+
+    buildingClusterer.current = newBuildingClusterer;
+    selectedMarker.current = newSelectedMarker;
+    buildingMarkers.current = newBuildingMarkers;
+  }, []);
+
+  // 줌 변경 시 핀 숨김 및 표시 처리
   const handleZoomChanged = useCallback((zoomLevel: number) => {
+    const isSearched = messages.length > 0;
+    if (isSearched) {
+      return;
+    }
+
     selectedMarker.current?.setVisible(false);
     if (zoomLevel > ZOOM_LEVEL_LIMIT.area) {
       selectedAreaRef.current = null;
@@ -238,17 +232,14 @@ const Map = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (!isInitialized.current) {
-      isInitialized.current = true;
-      initializeMap();
-    }
-  }, []);
-
   return (
     <main className='relative h-full w-full'>
       <div ref={mapRef} className='h-full w-full' />
-      <SearchTab />
+      <SearchTab
+        messages={messages}
+        setMessages={setMessages}
+        handleSetSearchMarkers={handleSetSearchMarkers}
+      />
       {selectedArea && <AreaTab area={selectedArea} />}
       {selectedBuilding && <BuildingTab address={selectedBuilding} />}
     </main>

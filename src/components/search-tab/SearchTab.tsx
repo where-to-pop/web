@@ -1,21 +1,31 @@
-import { ChangeEvent, KeyboardEvent, useState } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  KeyboardEvent,
+  SetStateAction,
+  useState,
+} from 'react';
 import Chat from './Chat';
 import SearchInput from './SearchInput';
-
-export interface Message {
-  id: number;
-  content: string;
-  align: 'left' | 'right';
-}
+import { Message } from 'src/types/common';
 
 const DEFAULT_RESPONSE_MESSAGE = {
   content: '다음 건물들을 추천드려요!',
   align: 'left',
 } as const;
 
-const SearchTab = () => {
+interface Props {
+  messages: Message[];
+  setMessages: Dispatch<SetStateAction<Message[]>>;
+  handleSetSearchMarkers: () => void;
+}
+
+const SearchTab = ({
+  messages,
+  setMessages,
+  handleSetSearchMarkers,
+}: Props) => {
   const [value, setValue] = useState('');
-  const [messages, setMessages] = useState<Message[]>([]);
 
   const handleSubmit = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter') {
@@ -33,6 +43,7 @@ const SearchTab = () => {
     };
     setMessages((prev) => [...prev, newMessage, newResponseMessage]);
     setValue('');
+    handleSetSearchMarkers();
   };
 
   const handleSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
