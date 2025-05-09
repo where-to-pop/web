@@ -1,10 +1,10 @@
 import Layout from 'src/components/Layout';
-import MapPage from 'src/pages/MapPage';
+import LoginPage from './pages/login-page/LoginPage';
 
 const App = () => {
   return (
     <Layout>
-      <MapPage />
+      <LoginPage />
     </Layout>
   );
 };
