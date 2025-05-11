@@ -13,13 +13,18 @@ import {
   POPUP_TYPES,
 } from 'src/constants/common.const';
 
-const NewProjectModal = () => {
+interface Props {
+  isOpen: boolean;
+  closeModal: () => void;
+}
+
+const NewProjectModal = ({ isOpen, closeModal }: Props) => {
   const { control } = useForm();
 
   return (
     <Modal
-      isOpen={true}
-      closeModal={() => {}}
+      isOpen={isOpen}
+      closeModal={closeModal}
       title='프로젝트 생성하기'
       description='새로운 프로젝트의 기본 정보를 입력해주세요.'
     >

@@ -1,8 +1,11 @@
 import { IconAddSquare } from 'public/icons';
 import ProjectCard from './components/ProjectCard';
 import NewProjectModal from './components/NewProjectModal';
+import { useState } from 'react';
 
 const ProjectPage = () => {
+  const [isNewProjectModalOpen, setIsNewProjectModalOpen] = useState(false);
+
   return (
     <>
       <div className='h-full w-full'>
@@ -19,13 +22,19 @@ const ProjectPage = () => {
             <ProjectCard />
             <ProjectCard />
             <ProjectCard />
-            <button className='relative flex h-300 w-300 items-center justify-center rounded-6 bg-grey-100'>
+            <button
+              onClick={() => setIsNewProjectModalOpen(true)}
+              className='relative flex h-300 w-300 items-center justify-center rounded-6 bg-grey-100'
+            >
               <IconAddSquare width={32} height={32} />
             </button>
           </ul>
         </main>
       </div>
-      <NewProjectModal />
+      <NewProjectModal
+        isOpen={isNewProjectModalOpen}
+        closeModal={() => setIsNewProjectModalOpen(false)}
+      />
     </>
   );
 };
