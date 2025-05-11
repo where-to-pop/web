@@ -37,7 +37,7 @@ const TextInput = <T extends FieldValues>({
         type={type}
         {...field}
         className={customTwMerge(
-          'h-48 w-full border-b border-grey-200 bg-transparent p-12 pr-44 text-16 font-400 outline-none placeholder:text-grey-400',
+          'h-48 w-full border-b border-grey-200 bg-transparent p-8 text-16 font-400 outline-none placeholder:text-grey-400',
           fieldState?.error ? 'border-red' : 'focus:border-primary-500',
         )}
       />

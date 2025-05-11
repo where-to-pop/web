@@ -24,7 +24,7 @@ const LoginPage = () => {
         </TextInput>
         <Button variant='secondary'>로그인</Button>
       </form>
-      <div className='fixed inset-0 z-nav backdrop-blur-[0.5px]' />
+      <div className='fixed inset-0 z-nav backdrop-blur-[1px]' />
       <div className='fixed left-1/2 top-1/2 z-base h-[946px] w-[1728px] -translate-x-1/2 -translate-y-1/2 select-none'>
         <IconLogo width='100%' height='100%' />
       </div>

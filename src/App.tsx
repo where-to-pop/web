@@ -1,10 +1,15 @@
 import Layout from 'src/components/Layout';
-import LoginPage from './pages/login-page/LoginPage';
+import LoginPage from './pages/login/LoginPage';
+import ProjectPage from './pages/project/ProjectPage';
+import { Route, Routes } from 'react-router-dom';
 
 const App = () => {
   return (
     <Layout>
-      <LoginPage />
+      <Routes>
+        <Route path='/' element={<LoginPage />} />
+        <Route path='/project' element={<ProjectPage />} />
+      </Routes>
     </Layout>
   );
 };
