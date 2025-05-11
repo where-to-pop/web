@@ -1,13 +1,23 @@
 import { IconLogo } from 'public/icons';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import Button from 'src/components/Button';
 import TextInput from 'src/components/TextInput';
 
 const LoginPage = () => {
-  const { control } = useForm();
+  const { control, handleSubmit } = useForm();
+  const navigate = useNavigate();
+
+  const onSubmit = () => {
+    navigate('/project');
+  };
+
   return (
     <main className='flex h-full w-full flex-col items-center justify-center p-40'>
-      <form className='z-popup flex w-full max-w-600 flex-col items-center gap-20 rounded-6 bg-white/95 p-28 shadow-[0_0_10px_0_rgba(0,0,0,0.2)]'>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className='z-popup flex w-full max-w-600 flex-col items-center gap-20 rounded-6 bg-white/95 p-28 shadow-[0_0_10px_0_rgba(0,0,0,0.2)]'
+      >
         <div className='flex w-full flex-col items-center gap-[6px]'>
           <h1 className='text-primary-600 text-12 font-400 leading-tight tracking-tight'>
             WHERE TO POP: AI 기반 대화형 팝업스토어 개설 위치 추천 서비스

@@ -2,16 +2,25 @@ import { IconAddSquare } from 'public/icons';
 import ProjectCard from './components/ProjectCard';
 import NewProjectModal from './components/NewProjectModal';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ProjectPage = () => {
+  const navigate = useNavigate();
   const [isNewProjectModalOpen, setIsNewProjectModalOpen] = useState(false);
+
+  const handleLogout = () => {
+    navigate('/');
+  };
 
   return (
     <>
       <div className='h-full w-full'>
         <nav className='flex h-48 items-center justify-between border-b border-grey-300 bg-white p-20'>
           <h1 className='text-primary-500 text-20 font-600'>WHERE TO POP</h1>
-          <button className='text-grey-700 underline underline-offset-2'>
+          <button
+            onClick={handleLogout}
+            className='text-grey-700 underline underline-offset-2'
+          >
             로그아웃
           </button>
         </nav>

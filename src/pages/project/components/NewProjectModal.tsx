@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import Button from 'src/components/Button';
 import DateInput from 'src/components/DateInput';
 import Modal from 'src/components/modal/Modal';
@@ -19,7 +20,12 @@ interface Props {
 }
 
 const NewProjectModal = ({ isOpen, closeModal }: Props) => {
+  const navigate = useNavigate();
   const { control } = useForm();
+
+  const handleSubmit = () => {
+    navigate('/project/1');
+  };
 
   return (
     <Modal
@@ -101,7 +107,7 @@ const NewProjectModal = ({ isOpen, closeModal }: Props) => {
         <TextArea control={control} name='projectInfo'>
           프로젝트 추가 정보
         </TextArea>
-        <Button>프로젝트 생성하기</Button>
+        <Button onClick={handleSubmit}>프로젝트 생성하기</Button>
       </div>
     </Modal>
   );

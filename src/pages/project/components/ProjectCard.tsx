@@ -1,6 +1,17 @@
+import { useNavigate } from 'react-router-dom';
+
 const ProjectCard = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/project/1');
+  };
+
   return (
-    <button className='relative h-300 w-300 overflow-hidden rounded-6'>
+    <button
+      onClick={handleClick}
+      className='relative h-300 w-300 overflow-hidden rounded-6'
+    >
       <img
         src='/images/project-example.webp'
         alt='project-card'
