@@ -3,11 +3,14 @@ import ProjectCard from './components/ProjectCard';
 import NewProjectModal from './components/NewProjectModal';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useGetProjects } from 'src/services/project.service';
 
 const ProjectPage = () => {
   const navigate = useNavigate();
-  const [isNewProjectModalOpen, setIsNewProjectModalOpen] = useState(false);
 
+  const { data: projects } = useGetProjects();
+
+  const [isNewProjectModalOpen, setIsNewProjectModalOpen] = useState(false);
   const handleLogout = () => {
     navigate('/');
   };
@@ -16,7 +19,7 @@ const ProjectPage = () => {
     <>
       <div className='h-full w-full'>
         <nav className='flex h-48 items-center justify-between border-b border-grey-300 bg-white p-20'>
-          <h1 className='text-primary-500 text-20 font-600'>WHERE TO POP</h1>
+          <h1 className='text-20 font-600 text-primary-500'>WHERE TO POP</h1>
           <button
             onClick={handleLogout}
             className='text-grey-700 underline underline-offset-2'
@@ -26,11 +29,9 @@ const ProjectPage = () => {
         </nav>
         <main className='p-28 pt-36'>
           <ul className='mx-auto flex max-w-1236 flex-wrap gap-12'>
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
+            {projects?.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
             <button
               onClick={() => setIsNewProjectModalOpen(true)}
               className='relative flex h-300 w-300 items-center justify-center rounded-6 bg-grey-100'

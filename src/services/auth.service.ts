@@ -3,12 +3,9 @@ import axios from 'axios';
 import { instance } from './config/instance';
 import { useMutation } from '@tanstack/react-query';
 
-interface PostLoginBody {
-  email: string;
-  password: string;
-}
+// ----- POST -----
 
-export const postLogin = async (body: PostLoginBody) => {
+export const postLogin = async (body: { email: string; password: string }) => {
   const res = await instance.post('/v1/auth/login', body, {
     schema: TokenSchema,
   });

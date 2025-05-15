@@ -8,11 +8,11 @@ import { postRefreshToken } from '../auth.service';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
-interface RequestInitWithSchema<T extends z.AnyZodObject> extends RequestInit {
+interface RequestInitWithSchema<T extends z.ZodTypeAny> extends RequestInit {
   schema?: T;
 }
 
-const getApiResponseSchema = <T extends z.AnyZodObject>(schema: T) =>
+const getApiResponseSchema = <T extends z.ZodTypeAny>(schema: T) =>
   z
     .object({
       result: ResultEnum,
@@ -28,7 +28,7 @@ class Instance {
   constructor(private readonly baseUrl: string = BASE_URL ?? '') {}
 
   // 기본 요청 함수
-  async fetchWithConfig<T extends z.AnyZodObject>(
+  async fetchWithConfig<T extends z.ZodTypeAny>(
     url: string,
     method: HttpMethod,
     body?: any,
@@ -73,7 +73,7 @@ class Instance {
     }
   }
 
-  async fetchWithRetry<T extends z.AnyZodObject>(
+  async fetchWithRetry<T extends z.ZodTypeAny>(
     url: string,
     method: HttpMethod,
     body?: any,
@@ -119,33 +119,33 @@ class Instance {
     }
   }
 
-  async get<T extends z.AnyZodObject>(
+  async get<T extends z.ZodTypeAny>(
     url: string,
     options?: RequestInitWithSchema<T>,
   ) {
     return this.fetchWithConfig<T>(url, 'GET', undefined, options);
   }
-  async delete<T extends z.AnyZodObject>(
+  async delete<T extends z.ZodTypeAny>(
     url: string,
     options?: RequestInitWithSchema<T>,
   ) {
     return await this.fetchWithConfig<T>(url, 'DELETE', undefined, options);
   }
-  async post<T extends z.AnyZodObject>(
+  async post<T extends z.ZodTypeAny>(
     url: string,
     body: any,
     options?: RequestInitWithSchema<T>,
   ) {
     return await this.fetchWithConfig<T>(url, 'POST', body, options);
   }
-  async put<T extends z.AnyZodObject>(
+  async put<T extends z.ZodTypeAny>(
     url: string,
     body: any,
     options?: RequestInitWithSchema<T>,
   ) {
     return await this.fetchWithConfig<T>(url, 'PUT', body, options);
   }
-  async patch<T extends z.AnyZodObject>(
+  async patch<T extends z.ZodTypeAny>(
     url: string,
     body: any,
     options?: RequestInitWithSchema<T>,
