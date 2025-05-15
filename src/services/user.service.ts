@@ -3,7 +3,7 @@ import { instance } from './config/instance';
 import { useQuery } from '@tanstack/react-query';
 
 export const getUser = async () => {
-  const user = await instance.get('/user', {
+  const user = await instance.get('/v1/users/me', {
     schema: UserSchema,
   });
   return user;
