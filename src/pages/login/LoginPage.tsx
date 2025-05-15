@@ -1,8 +1,11 @@
 import { IconLogo } from 'public/icons';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Button from 'src/components/Button';
 import TextInput from 'src/components/TextInput';
+import { getUser } from 'src/services/user.service';
 
 const LoginPage = () => {
   const { control, handleSubmit } = useForm();
@@ -12,6 +15,14 @@ const LoginPage = () => {
     navigate('/project');
   };
 
+  const a = getUser();
+  console.log(a);
+
+  useEffect(() => {
+    toast.success('로그인 성공');
+    toast.success('로그인 성공');
+  }, []);
+
   return (
     <main className='flex h-full w-full flex-col items-center justify-center p-40'>
       <form
@@ -19,10 +30,10 @@ const LoginPage = () => {
         className='z-popup flex w-full max-w-600 flex-col items-center gap-20 rounded-6 bg-white/95 p-28 shadow-[0_0_10px_0_rgba(0,0,0,0.2)]'
       >
         <div className='flex w-full flex-col items-center gap-[6px]'>
-          <h1 className='text-primary-600 text-12 font-400 leading-tight tracking-tight'>
+          <h1 className='text-12 font-400 leading-tight tracking-tight text-primary-600'>
             WHERE TO POP: AI 기반 대화형 팝업스토어 개설 위치 추천 서비스
           </h1>
-          <h2 className='text-primary-600 text-18 font-500 leading-tight tracking-tight'>
+          <h2 className='text-18 font-500 leading-tight tracking-tight text-primary-600'>
             지금, 가장 잘 팔릴 장소를 찾아드립니다
           </h2>
         </div>
