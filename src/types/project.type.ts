@@ -52,8 +52,8 @@ export const ProjectSchema = z.object({
 });
 export type Project = z.infer<typeof ProjectSchema>;
 
-export const CreateProjectSchema = ProjectSchema.omit({
+export const CreateProjectBodySchema = ProjectSchema.omit({
   id: true,
   ownerId: true,
 });
-export type CreateProject = z.infer<typeof CreateProjectSchema>;
+export type CreateProjectBody = z.infer<typeof CreateProjectBodySchema>;

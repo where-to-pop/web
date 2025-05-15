@@ -1,4 +1,4 @@
-import { CreateProject, Project, ProjectSchema } from 'src/types/project.type';
+import { CreateProjectBody, ProjectSchema } from 'src/types/project.type';
 import { instance } from './config/instance';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
@@ -34,7 +34,7 @@ export const useGetProject = (id: number) => {
 
 // ----- POST -----
 
-export const postProject = async (body: CreateProject) => {
+export const postProject = async (body: CreateProjectBody) => {
   const res = await instance.post('/v1/projects', body, {
     schema: ProjectSchema,
   });
@@ -47,7 +47,7 @@ export const usePostProject = () => {
   });
 };
 
-export const putProject = async (id: number, body: CreateProject) => {
+export const putProject = async (id: number, body: CreateProjectBody) => {
   const res = await instance.put(`/v1/projects/${id}`, body, {
     schema: ProjectSchema,
   });
@@ -56,7 +56,7 @@ export const putProject = async (id: number, body: CreateProject) => {
 
 export const usePutProject = () => {
   return useMutation({
-    mutationFn: ({ id, body }: { id: number; body: CreateProject }) =>
+    mutationFn: ({ id, body }: { id: number; body: CreateProjectBody }) =>
       putProject(id, body),
   });
 };

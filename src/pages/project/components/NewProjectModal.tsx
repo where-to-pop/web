@@ -22,7 +22,7 @@ import {
   PopupCategoryEnum,
   PopupType,
   PopupTypeEnum,
-  CreateProject,
+  CreateProjectBody,
 } from 'src/types/project.type';
 
 interface FormValues {
@@ -52,7 +52,7 @@ const NewProjectModal = ({ isOpen, closeModal }: Props) => {
   const { mutateAsync: createProject } = usePostProject();
 
   const handleCreateProject = async (data: FormValues) => {
-    const body: CreateProject = {
+    const body: CreateProjectBody = {
       ...data,
       duration: `${data.durationStart} ~ ${data.durationEnd}`,
     };
@@ -79,6 +79,9 @@ const NewProjectModal = ({ isOpen, closeModal }: Props) => {
         onSubmit={handleSubmit(handleCreateProject)}
       >
         <TextInput control={control} name='name'>
+          프로젝트 이름
+        </TextInput>
+        <TextInput control={control} name='brandName'>
           브랜드 이름
         </TextInput>
         <div className='flex flex-col gap-12'>
