@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { z } from 'zod';
-import replacer, { silentParse } from './config.util';
+import { silentParse, replacer } from './config.util';
 import { CustomError } from './customError';
 import { ErrorCodeEnum, ResultEnum } from 'src/types/serviceConfig.type';
 import { postRefreshToken } from '../auth.service';

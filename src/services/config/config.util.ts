@@ -42,7 +42,7 @@ export const silentParse = <T extends z.ZodTypeAny>(
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const replacer = (key: string, value: unknown) => {
+export const replacer = (_: string, value: unknown) => {
   if (value instanceof Date) {
     const date = dayjs(value);
 
@@ -54,5 +54,3 @@ export const replacer = (key: string, value: unknown) => {
   }
   return value;
 };
-
-export default replacer;

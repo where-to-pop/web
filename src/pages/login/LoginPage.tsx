@@ -1,12 +1,10 @@
 import { IconLogo } from 'public/icons';
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Button from 'src/components/Button';
 import TextInput from 'src/components/TextInput';
 import { usePostLogin } from 'src/services/auth.service';
-import { getUser } from 'src/services/user.service';
 
 interface FormValues {
   email: string;
@@ -22,7 +20,7 @@ const LoginPage = () => {
     try {
       await login(data);
       toast.success('오신 것을 환영합니다!');
-      // navigate('/project');
+      navigate('/project');
     } catch (error) {
       console.error(error);
       toast.error('아이디 또는 비밀번호가 일치하지 않습니다.');
