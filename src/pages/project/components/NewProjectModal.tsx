@@ -87,9 +87,21 @@ const NewProjectModal = ({ isOpen, closeModal }: Props) => {
         <div className='flex flex-col gap-12'>
           <label className='block h-20 text-14 font-500'>기간</label>
           <div className='flex items-center gap-8'>
-            <DateInput />
+            <Controller
+              control={control}
+              name='durationStart'
+              render={({ field }) => (
+                <DateInput value={field.value} setValue={field.onChange} />
+              )}
+            />
             <span className='text-14 font-400 text-grey-700'>~</span>
-            <DateInput />
+            <Controller
+              control={control}
+              name='durationEnd'
+              render={({ field }) => (
+                <DateInput value={field.value} setValue={field.onChange} />
+              )}
+            />
           </div>
         </div>
         <div className='flex flex-col gap-12'>

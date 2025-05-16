@@ -6,8 +6,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 interface Props {
   disabled?: boolean;
-  value?: string;
-  setValue?: (value: string | null) => void;
+  value: string;
+  setValue: (value: string | null) => void;
 }
 
 const DateInput = ({ disabled, value, setValue }: Props) => {
