@@ -6,9 +6,10 @@ import { Chat } from 'src/types/chat.type';
 interface Props {
   projectId: string;
   chats: Chat[];
+  currentChatId: string | undefined;
 }
 
-const NavBar = ({ projectId, chats }: Props) => {
+const NavBar = ({ projectId, chats, currentChatId }: Props) => {
   const navigate = useNavigate();
   return (
     <nav className='group relative h-full w-72'>
@@ -23,21 +24,24 @@ const NavBar = ({ projectId, chats }: Props) => {
           <IconAdd width={40} height={30} />
         </button>
       </div>
-      <div className='absolute bottom-0 left-[-90px] top-0 z-base w-160 bg-grey-200 px-[10px] py-20 transition-all duration-300 group-hover:translate-x-160'>
+      <div className='absolute bottom-0 left-[-130px] top-0 z-base w-200 bg-grey-200/95 px-[10px] py-20 transition-all duration-300 group-hover:translate-x-200'>
         <h2 className='pb-8 text-12 font-400 text-grey-500'>채팅방 목록</h2>
-        <ul className='flex flex-col gap-12'>
+        <ul>
           {chats.map((chat) => (
-            <button
-              key={chat.id}
-              className='w-full text-left'
-              onClick={() => {
-                navigate(`project/${chat.projectId}/chat/${chat.id}`);
-              }}
-            >
-              <h3 className='border-b border-grey-300/30 py-4 text-14 font-500 text-grey-700'>
+            <li key={chat.id} className='border-b border-grey-300/60'>
+              <button
+                className={`my-12 line-clamp-1 w-full rounded-6 px-4 py-4 text-left text-14 font-500 hover:bg-grey-300/50 ${
+                  currentChatId === chat.id
+                    ? 'bg-primary-50/50 text-primary-500'
+                    : 'text-grey-700'
+                }`}
+                onClick={() => {
+                  navigate(`/project/${chat.projectId}/chat/${chat.id}`);
+                }}
+              >
                 {chat.title}
-              </h3>
-            </button>
+              </button>
+            </li>
           ))}
         </ul>
       </div>
