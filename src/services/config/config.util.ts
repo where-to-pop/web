@@ -1,6 +1,5 @@
 import { z } from 'zod';
 import { toast } from 'react-toastify';
-import dayjs from 'dayjs';
 
 interface SilentParseOptions {
   showToast?: boolean;
@@ -39,18 +38,4 @@ export const silentParse = <T extends z.ZodTypeAny>(
     return input as z.infer<T>;
   }
   return parseResult.data;
-};
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const replacer = (_: string, value: unknown) => {
-  if (value instanceof Date) {
-    const date = dayjs(value);
-
-    if (date.startOf('day').isSame(date)) {
-      return date.format('YYYY-MM-DD');
-    }
-
-    return date.format('YYYY-MM-DD HH:mm:ss');
-  }
-  return value;
 };

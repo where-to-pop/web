@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { z } from 'zod';
-import { silentParse, replacer } from './config.util';
+import { silentParse } from './config.util';
 import { CustomError } from './customError';
 import { ErrorCodeEnum, ResultEnum } from 'src/types/serviceConfig.type';
 import { postRefreshToken } from '../auth.service';
+import axios, { AxiosRequestConfig } from 'axios';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
-interface RequestInitWithSchema<T extends z.ZodTypeAny> extends RequestInit {
+interface RequestInitWithSchema<T extends z.ZodTypeAny>
+  extends AxiosRequestConfig {
   schema?: T;
 }
 
@@ -35,33 +37,30 @@ class Instance {
     options: RequestInitWithSchema<T> = {},
   ) {
     const { schema, ...pureOptions } = options;
-    const config: RequestInit = {
+    const config: AxiosRequestConfig = {
       method,
       ...options,
+      withCredentials: true,
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        credentials: 'include',
         ...pureOptions?.headers,
       },
-      ...(body && { body: JSON.stringify(body, replacer) }),
+      ...(body && { data: body, ...pureOptions }),
     };
 
-    const res = await fetch(new URL(url, this.baseUrl).toString(), config);
+    const res = await axios(new URL(url, this.baseUrl).toString(), config);
 
     const showToast = schema !== undefined && method === 'GET';
     const responseSchema = schema
       ? getApiResponseSchema(schema)
       : getApiResponseSchema(z.object({}));
 
-    let parsedData: z.infer<typeof responseSchema>;
-
-    try {
-      const data = await res.json();
-      parsedData = silentParse(responseSchema, data, { showToast });
-    } catch (e) {
-      console.error('fetchWithConfig JSON 파싱 오류: ', e);
-      throw new CustomError(res.status.toString(), 'No Content');
-    }
+    const parsedData: z.infer<typeof responseSchema> = silentParse(
+      responseSchema,
+      res.data,
+      { showToast },
+    );
 
     if (parsedData.result === 'FAIL') {
       console.error(parsedData.errorCode + ' ' + parsedData.message);
