@@ -1,10 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { instance } from './config/instance';
-import {
-  ChatSchema,
-  ChatWithMessagesSchema,
-  CreateMessageResponseSchema,
-} from 'src/types/chat.type';
+import { ChatSchema, ChatWithMessagesSchema } from 'src/types/chat.type';
 
 // ----- GET -----
 
@@ -39,19 +35,19 @@ export const useGetChat = (chatId: number) => {
 
 // ----- POST -----
 
-export const postChat = async (
+export const postMessage = async (
   chatId: number,
   body: {
     message: string;
   },
 ) => {
   const res = await instance.post(`/v1/chats/${chatId}/messages`, body, {
-    schema: CreateMessageResponseSchema,
+    schema: ChatWithMessagesSchema,
   });
   return res;
 };
 
-export const usePostChat = () => {
+export const usePostMessage = () => {
   return useMutation({
     mutationFn: ({
       chatId,
@@ -59,6 +55,6 @@ export const usePostChat = () => {
     }: {
       chatId: number;
       body: { message: string };
-    }) => postChat(chatId, body),
+    }) => postMessage(chatId, body),
   });
 };

@@ -22,7 +22,7 @@ const LoginPage = () => {
     try {
       await login(data);
       toast.success('오신 것을 환영합니다!');
-      navigate('/project');
+      // navigate('/project');
     } catch (error) {
       console.error(error);
       toast.error('아이디 또는 비밀번호가 일치하지 않습니다.');

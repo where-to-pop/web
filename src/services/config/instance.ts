@@ -53,24 +53,25 @@ class Instance {
       ? getApiResponseSchema(schema)
       : getApiResponseSchema(z.object({}));
 
-    try {
-      // response가 있는 경우
-      const data = await res.json();
-      const parsedData = silentParse(responseSchema, data, { showToast });
+    let parsedData: z.infer<typeof responseSchema>;
 
-      if (parsedData.result === 'FAIL') {
-        throw new CustomError(
-          parsedData.errorCode || 'UNKNOWN_ERROR_CODE',
-          parsedData.message || '알 수 없는 오류',
-        );
-      }
-      // NOTE: 이 타입 단언은 안전함
-      return parsedData.data as z.infer<T>;
+    try {
+      const data = await res.json();
+      parsedData = silentParse(responseSchema, data, { showToast });
     } catch (e) {
-      // response가 없는 경우
       console.error('fetchWithConfig JSON 파싱 오류: ', e);
       throw new CustomError(res.status.toString(), 'No Content');
     }
+
+    if (parsedData.result === 'FAIL') {
+      console.error(parsedData.errorCode + ' ' + parsedData.message);
+      throw new CustomError(
+        parsedData.errorCode || 'UNKNOWN_ERROR_CODE',
+        parsedData.message || '알 수 없는 오류',
+      );
+    }
+
+    return parsedData.data as z.infer<T>;
   }
 
   async fetchWithRetry<T extends z.ZodTypeAny>(
@@ -85,7 +86,7 @@ class Instance {
   }
 
   // 토큰 갱신 요청이 진행 중인 경우 그 결과를 사용
-  private tokenUpdatePromise: Promise<{}> | null = null;
+  private tokenUpdatePromise: Promise<unknown> | null = null;
 
   // 토큰 갱신 요청
   private async updateToken() {
@@ -123,34 +124,34 @@ class Instance {
     url: string,
     options?: RequestInitWithSchema<T>,
   ) {
-    return this.fetchWithConfig<T>(url, 'GET', undefined, options);
+    return this.fetchWithRetry<T>(url, 'GET', undefined, options);
   }
   async delete<T extends z.ZodTypeAny>(
     url: string,
     options?: RequestInitWithSchema<T>,
   ) {
-    return await this.fetchWithConfig<T>(url, 'DELETE', undefined, options);
+    return await this.fetchWithRetry<T>(url, 'DELETE', undefined, options);
   }
   async post<T extends z.ZodTypeAny>(
     url: string,
     body: any,
     options?: RequestInitWithSchema<T>,
   ) {
-    return await this.fetchWithConfig<T>(url, 'POST', body, options);
+    return await this.fetchWithRetry<T>(url, 'POST', body, options);
   }
   async put<T extends z.ZodTypeAny>(
     url: string,
     body: any,
     options?: RequestInitWithSchema<T>,
   ) {
-    return await this.fetchWithConfig<T>(url, 'PUT', body, options);
+    return await this.fetchWithRetry<T>(url, 'PUT', body, options);
   }
   async patch<T extends z.ZodTypeAny>(
     url: string,
     body: any,
     options?: RequestInitWithSchema<T>,
   ) {
-    return await this.fetchWithConfig<T>(url, 'PATCH', body, options);
+    return await this.fetchWithRetry<T>(url, 'PATCH', body, options);
   }
 }
 
