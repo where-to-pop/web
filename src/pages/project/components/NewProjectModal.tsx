@@ -103,6 +103,7 @@ const NewProjectModal = ({ isOpen, closeModal }: Props) => {
                 render={({ field }) => (
                   <button
                     key={category}
+                    type='button'
                     onClick={() => field.onChange(category)}
                     className={`rounded-6 border border-grey-400 px-8 py-[2px] text-14 font-400 text-grey-700 transition-all ${
                       category === field.value &&
@@ -127,6 +128,7 @@ const NewProjectModal = ({ isOpen, closeModal }: Props) => {
                 render={({ field }) => (
                   <button
                     key={type}
+                    type='button'
                     onClick={() => field.onChange(type)}
                     className={`rounded-6 border border-grey-400 px-8 py-[2px] text-14 font-400 text-grey-700 transition-all ${
                       type === field.value &&
@@ -151,6 +153,7 @@ const NewProjectModal = ({ isOpen, closeModal }: Props) => {
                 render={({ field }) => (
                   <button
                     key={ageGroup}
+                    type='button'
                     onClick={() => field.onChange(ageGroup)}
                     className={`rounded-6 border border-grey-400 px-8 py-[2px] text-14 font-400 text-grey-700 transition-all ${
                       ageGroup === field.value &&
@@ -175,6 +178,7 @@ const NewProjectModal = ({ isOpen, closeModal }: Props) => {
                 render={({ field }) => (
                   <button
                     key={brandScale}
+                    type='button'
                     onClick={() => field.onChange(brandScale)}
                     className={`rounded-6 border border-grey-400 px-8 py-[2px] text-14 font-400 text-grey-700 transition-all ${
                       brandScale === field.value &&
