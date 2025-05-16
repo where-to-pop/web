@@ -1,44 +1,88 @@
 import { useGetChat, usePostMessage } from 'src/services/chat.service';
 import Input from './components/Input';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import AssistantMessage from './components/message/AssistantMessage';
 import UserMessage from './components/message/UserMessage';
 import { toast } from 'react-toastify';
+import { Message } from 'src/types/chat.type';
 
 const ChatPage = () => {
   const { chatId } = useParams();
 
   const { data: chat } = useGetChat(chatId ?? '');
-  const messages = chat?.messages ?? [];
+  const { mutateAsync: postMessage } = usePostMessage();
+  const [messages, setMessages] = useState<Message[]>([]);
 
-  const { mutateAsync: postMessage, isPending: isPosting } = usePostMessage();
+  const isInitiated = useRef(false);
+  useEffect(() => {
+    if (isInitiated.current || !chat) {
+      return;
+    }
+    isInitiated.current = true;
+    setMessages(chat.messages);
+    scrollToBottom();
+  }, [chat]);
 
   const [value, setValue] = useState('');
-
+  const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = async () => {
+    setIsLoading(true);
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: '',
+        role: 'USER',
+        content: value,
+        createdAt: Date.now(),
+      },
+    ]);
+
     try {
-      await postMessage({
+      const newMessage = await postMessage({
         chatId: chatId ?? '',
         body: { message: value },
       });
+      setMessages((prev) => {
+        const prevMessages = prev.slice(0, -1);
+        return [
+          ...prevMessages,
+          newMessage.latestUserMessage,
+          newMessage.latestAssistantMessage,
+        ];
+      });
+
       scrollToBottom();
       setValue('');
     } catch (error) {
       console.error(error);
       toast.error('메시지 전송에 실패했습니다.');
+    } finally {
+      setIsLoading(false);
+      setFocusToInput();
     }
   };
 
   const messagesContainer = useRef<HTMLDivElement>(null);
   const scrollToBottom = () => {
     setTimeout(() => {
-      if (messagesContainer.current) {
-        messagesContainer.current.scrollTo({
-          top: messagesContainer.current.scrollHeight,
-          behavior: 'smooth',
-        });
+      if (!messagesContainer.current) {
+        return;
       }
+      messagesContainer.current.scrollTo({
+        top: messagesContainer.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }, 0);
+  };
+
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const setFocusToInput = () => {
+    setTimeout(() => {
+      if (!inputRef.current) {
+        return;
+      }
+      inputRef.current.focus();
     }, 0);
   };
 
@@ -59,10 +103,11 @@ const ChatPage = () => {
         </ul>
       </section>
       <Input
+        ref={inputRef}
         value={value}
         onChange={setValue}
         onSubmit={handleSubmit}
-        disabled={isPosting}
+        disabled={isLoading}
       />
     </>
   );
