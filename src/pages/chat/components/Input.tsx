@@ -4,9 +4,10 @@ interface Props {
   value: string;
   onChange: (value: string) => void;
   onSubmit: () => void;
+  disabled?: boolean;
 }
 
-const Input = ({ value, onChange, onSubmit }: Props) => {
+const Input = ({ value, onChange, onSubmit, disabled }: Props) => {
   return (
     <section className='absolute bottom-0 left-1/2 h-120 w-full max-w-900 -translate-x-1/2 rounded-t-16 bg-[#F8F9FA] pb-24'>
       <textarea
@@ -21,11 +22,12 @@ const Input = ({ value, onChange, onSubmit }: Props) => {
           }
         }}
         placeholder='요새 SNS에서 반응이 좋은 곳들을 추천해줘.'
-        className='focus:border-primary-500 h-full w-full resize-none rounded-16 border-[1.3px] border-grey-300 bg-transparent px-16 py-12 text-16 font-400 outline-none'
+        className='h-full w-full resize-none rounded-16 border-[1.3px] border-grey-300 bg-transparent px-16 py-12 text-16 font-400 outline-none focus:border-primary-500'
       />
       <button
         onClick={onSubmit}
-        className='absolute bottom-32 right-8 flex h-32 w-32 items-center justify-center rounded-full bg-grey-200'
+        disabled={disabled}
+        className='absolute bottom-32 right-8 flex h-32 w-32 items-center justify-center rounded-full bg-grey-200 disabled:opacity-50'
       >
         <IconArrowUp width={20} height={20} />
       </button>

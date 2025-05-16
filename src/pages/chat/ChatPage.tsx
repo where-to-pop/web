@@ -1,4 +1,8 @@
-import { useGetChat, useGetChats } from 'src/services/chat.service';
+import {
+  useGetChat,
+  useGetChats,
+  usePostMessage,
+} from 'src/services/chat.service';
 import Input from './components/Input';
 import NavBar from './components/NavBar';
 import { useMemo, useRef, useState } from 'react';
@@ -6,6 +10,7 @@ import { useParams } from 'react-router-dom';
 import AssistantMessage from './components/message/AssistantMessage';
 import UserMessage from './components/message/UserMessage';
 import Header from './components/Header';
+import { toast } from 'react-toastify';
 
 const ChatPage = () => {
   const { projectId, chatId } = useParams();
@@ -19,10 +24,22 @@ const ChatPage = () => {
   const { data: chat } = useGetChat(Number(chatId));
   const messages = chat?.messages ?? [];
 
+  const { mutateAsync: postMessage, isPending: isPosting } = usePostMessage();
+
   const [value, setValue] = useState('');
 
-  const handleSubmit = () => {
-    scrollToBottom();
+  const handleSubmit = async () => {
+    try {
+      await postMessage({
+        chatId: Number(chatId),
+        body: { message: value },
+      });
+      scrollToBottom();
+      setValue('');
+    } catch (error) {
+      console.error(error);
+      toast.error('메시지 전송에 실패했습니다.');
+    }
   };
 
   const messagesContainer = useRef<HTMLDivElement>(null);
@@ -39,7 +56,7 @@ const ChatPage = () => {
 
   return (
     <div className='flex h-full w-full'>
-      <NavBar chats={chatsOfProject} />
+      <NavBar projectId={Number(projectId)} chats={chatsOfProject} />
       <main className='relative flex flex-1 flex-col'>
         <Header projectId={Number(projectId)} />
         <section
@@ -56,7 +73,12 @@ const ChatPage = () => {
             )}
           </ul>
         </section>
-        <Input value={value} onChange={setValue} onSubmit={handleSubmit} />
+        <Input
+          value={value}
+          onChange={setValue}
+          onSubmit={handleSubmit}
+          disabled={isPosting}
+        />
       </main>
     </div>
   );

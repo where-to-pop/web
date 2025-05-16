@@ -4,16 +4,22 @@ import { useNavigate } from 'react-router-dom';
 import { Chat } from 'src/types/chat.type';
 
 interface Props {
+  projectId: number;
   chats: Chat[];
 }
 
-const NavBar = ({ chats }: Props) => {
+const NavBar = ({ projectId, chats }: Props) => {
   const navigate = useNavigate();
   return (
     <nav className='group relative h-full w-72'>
       <div className='absolute bottom-0 left-0 top-0 z-nav flex w-[70px] flex-col items-center gap-24 border-r border-grey-300/50 bg-grey-200 py-12'>
         <IconHamburger width={40} height={30} />
-        <button className='h-40 w-40 rounded-full bg-grey-300/50'>
+        <button
+          className='h-40 w-40 rounded-full bg-grey-300/50'
+          onClick={() => {
+            navigate(`/project/${projectId}`);
+          }}
+        >
           <IconAdd width={40} height={30} />
         </button>
       </div>
