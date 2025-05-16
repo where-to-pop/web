@@ -4,7 +4,7 @@ import NewProjectModal from './components/NewProjectModal';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetProjects } from 'src/services/project.service';
-import { usePostLogout } from 'src/services/auth.service';
+import { deleteLogout } from 'src/services/auth.service';
 import { toast } from 'react-toastify';
 
 const ProjectPage = () => {
@@ -12,14 +12,17 @@ const ProjectPage = () => {
 
   const { data: projects } = useGetProjects();
 
-  const { mutateAsync: postLogout, isPending: isLoggingOut } = usePostLogout();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const handleLogout = async () => {
     try {
-      await postLogout();
+      setIsLoggingOut(true);
+      await deleteLogout();
       navigate('/');
     } catch (error) {
       console.error(error);
       toast.error('로그아웃에 실패했습니다.');
+    } finally {
+      setIsLoggingOut(false);
     }
   };
 

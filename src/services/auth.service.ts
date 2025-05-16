@@ -29,12 +29,6 @@ export const postRefreshToken = async () => {
   return res;
 };
 
-export const postLogout = async () => {
-  await instance.post('/v1/auth/logout', undefined);
-};
-
-export const usePostLogout = () => {
-  return useMutation({
-    mutationFn: postLogout,
-  });
+export const deleteLogout = async () => {
+  await instance.delete('/v1/auth/logout', undefined);
 };
