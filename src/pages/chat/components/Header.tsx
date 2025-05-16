@@ -1,7 +1,7 @@
 import { useGetProject } from 'src/services/project.service';
 
 interface Props {
-  projectId: number;
+  projectId: string;
 }
 
 const Header = ({ projectId }: Props) => {

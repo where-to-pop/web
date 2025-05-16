@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Chat } from 'src/types/chat.type';
 
 interface Props {
-  projectId: number;
+  projectId: string;
   chats: Chat[];
 }
 

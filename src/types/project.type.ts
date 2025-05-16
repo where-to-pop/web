@@ -36,7 +36,7 @@ export type PopupType = z.infer<typeof PopupTypeEnum>;
 // ----- SCHEMA -----
 
 export const ProjectSchema = z.object({
-  id: z.number(),
+  id: z.string(),
   name: z.string(),
   brandName: z.string(),
   popupCategory: PopupCategoryEnum,
@@ -48,7 +48,7 @@ export const ProjectSchema = z.object({
   projectGoal: z.string(),
   additionalBrandInfo: z.string(),
   additionalProjectInfo: z.string(),
-  ownerId: z.number(),
+  ownerId: z.string(),
 });
 export type Project = z.infer<typeof ProjectSchema>;
 

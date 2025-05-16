@@ -8,9 +8,9 @@ export type Role = z.infer<typeof RoleEnum>;
 // ----- SCHEMA -----
 
 export const ChatSchema = z.object({
-  id: z.number(),
-  userId: z.number(),
-  projectId: z.number(),
+  id: z.string(),
+  userId: z.string(),
+  projectId: z.string(),
   isActive: z.boolean(),
   title: z.string(),
   createdAt: z.number(),
@@ -19,7 +19,7 @@ export const ChatSchema = z.object({
 export type Chat = z.infer<typeof ChatSchema>;
 
 export const MessageSchema = z.object({
-  id: z.number(),
+  id: z.string(),
   role: RoleEnum,
   content: z.string(),
   createdAt: z.number(),
@@ -32,9 +32,9 @@ export const ChatWithMessagesSchema = ChatSchema.extend({
 export type ChatWithMessages = z.infer<typeof ChatWithMessagesSchema>;
 
 export const CreateMessageResponseSchema = z.object({
-  id: z.number(),
-  userId: z.number(),
-  projectId: z.number(),
+  id: z.string(),
+  userId: z.string(),
+  projectId: z.string(),
   title: z.string(),
   latestUserMessage: MessageSchema,
   latestAssistantMessage: MessageSchema,

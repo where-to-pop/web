@@ -97,6 +97,7 @@ const NewProjectModal = ({ isOpen, closeModal }: Props) => {
           <div className='flex gap-8'>
             {PopupCategoryEnum.options.map((category) => (
               <Controller
+                key={category}
                 control={control}
                 name='popupCategory'
                 render={({ field }) => (
@@ -120,6 +121,7 @@ const NewProjectModal = ({ isOpen, closeModal }: Props) => {
           <div className='flex gap-8'>
             {PopupTypeEnum.options.map((type) => (
               <Controller
+                key={type}
                 control={control}
                 name='popupType'
                 render={({ field }) => (
@@ -143,6 +145,7 @@ const NewProjectModal = ({ isOpen, closeModal }: Props) => {
           <div className='flex gap-8'>
             {AgeGroupEnum.options.map((ageGroup) => (
               <Controller
+                key={ageGroup}
                 control={control}
                 name='primaryTargetAgeGroup'
                 render={({ field }) => (
@@ -166,6 +169,7 @@ const NewProjectModal = ({ isOpen, closeModal }: Props) => {
           <div className='flex gap-8'>
             {BrandScaleEnum.options.map((brandScale) => (
               <Controller
+                key={brandScale}
                 control={control}
                 name='brandScale'
                 render={({ field }) => (

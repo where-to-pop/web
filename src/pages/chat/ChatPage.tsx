@@ -17,11 +17,11 @@ const ChatPage = () => {
 
   const { data: chats } = useGetChats();
   const chatsOfProject = useMemo(
-    () => chats?.filter((chat) => chat.projectId === Number(projectId)) ?? [],
+    () => chats?.filter((chat) => chat.projectId === projectId) ?? [],
     [chats, projectId],
   );
 
-  const { data: chat } = useGetChat(Number(chatId));
+  const { data: chat } = useGetChat(chatId ?? '');
   const messages = chat?.messages ?? [];
 
   const { mutateAsync: postMessage, isPending: isPosting } = usePostMessage();
@@ -31,7 +31,7 @@ const ChatPage = () => {
   const handleSubmit = async () => {
     try {
       await postMessage({
-        chatId: Number(chatId),
+        chatId: chatId ?? '',
         body: { message: value },
       });
       scrollToBottom();
@@ -56,9 +56,9 @@ const ChatPage = () => {
 
   return (
     <div className='flex h-full w-full'>
-      <NavBar projectId={Number(projectId)} chats={chatsOfProject} />
+      <NavBar projectId={projectId ?? ''} chats={chatsOfProject} />
       <main className='relative flex flex-1 flex-col'>
-        <Header projectId={Number(projectId)} />
+        <Header projectId={projectId ?? ''} />
         <section
           ref={messagesContainer}
           className='relative flex-1 overflow-y-auto pb-200 pt-24'

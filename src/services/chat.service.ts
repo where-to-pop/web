@@ -23,14 +23,14 @@ export const useGetChats = () => {
   });
 };
 
-export const getChat = async (chatId: number) => {
+export const getChat = async (chatId: string) => {
   const res = await instance.get(`/v1/chats/${chatId}`, {
     schema: ChatWithMessagesSchema,
   });
   return res;
 };
 
-export const useGetChat = (chatId: number) => {
+export const useGetChat = (chatId: string) => {
   return useQuery({
     queryKey: ['chat', chatId],
     queryFn: () => getChat(chatId),
@@ -40,7 +40,7 @@ export const useGetChat = (chatId: number) => {
 // ----- POST -----
 
 export const postChat = async (body: {
-  projectId: number;
+  projectId: string;
   initialMessage: string;
 }) => {
   const res = await instance.post('/v1/chats', body, {
@@ -51,13 +51,13 @@ export const postChat = async (body: {
 
 export const usePostChat = () => {
   return useMutation({
-    mutationFn: (body: { projectId: number; initialMessage: string }) =>
+    mutationFn: (body: { projectId: string; initialMessage: string }) =>
       postChat(body),
   });
 };
 
 export const postMessage = async (
-  chatId: number,
+  chatId: string,
   body: {
     message: string;
   },
@@ -74,7 +74,7 @@ export const usePostMessage = () => {
       chatId,
       body,
     }: {
-      chatId: number;
+      chatId: string;
       body: { message: string };
     }) => postMessage(chatId, body),
   });

@@ -18,14 +18,14 @@ export const useGetProjects = () => {
   });
 };
 
-export const getProject = async (id: number) => {
+export const getProject = async (id: string) => {
   const res = await instance.get(`/v1/projects/${id}`, {
     schema: ProjectSchema,
   });
   return res;
 };
 
-export const useGetProject = (id: number) => {
+export const useGetProject = (id: string) => {
   return useQuery({
     queryKey: ['project', id],
     queryFn: () => getProject(id),
@@ -47,7 +47,7 @@ export const usePostProject = () => {
   });
 };
 
-export const putProject = async (id: number, body: CreateProjectBody) => {
+export const putProject = async (id: string, body: CreateProjectBody) => {
   const res = await instance.put(`/v1/projects/${id}`, body, {
     schema: ProjectSchema,
   });
@@ -56,7 +56,7 @@ export const putProject = async (id: number, body: CreateProjectBody) => {
 
 export const usePutProject = () => {
   return useMutation({
-    mutationFn: ({ id, body }: { id: number; body: CreateProjectBody }) =>
+    mutationFn: ({ id, body }: { id: string; body: CreateProjectBody }) =>
       putProject(id, body),
   });
 };
