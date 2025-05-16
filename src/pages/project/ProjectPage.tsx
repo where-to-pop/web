@@ -4,16 +4,26 @@ import NewProjectModal from './components/NewProjectModal';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetProjects } from 'src/services/project.service';
+import { usePostLogout } from 'src/services/auth.service';
+import { toast } from 'react-toastify';
 
 const ProjectPage = () => {
   const navigate = useNavigate();
 
   const { data: projects } = useGetProjects();
 
-  const [isNewProjectModalOpen, setIsNewProjectModalOpen] = useState(false);
-  const handleLogout = () => {
-    navigate('/');
+  const { mutateAsync: postLogout, isPending: isLoggingOut } = usePostLogout();
+  const handleLogout = async () => {
+    try {
+      await postLogout();
+      navigate('/');
+    } catch (error) {
+      console.error(error);
+      toast.error('로그아웃에 실패했습니다.');
+    }
   };
+
+  const [isNewProjectModalOpen, setIsNewProjectModalOpen] = useState(false);
 
   return (
     <>
@@ -22,7 +32,8 @@ const ProjectPage = () => {
           <h1 className='text-20 font-600 text-primary-500'>WHERE TO POP</h1>
           <button
             onClick={handleLogout}
-            className='text-grey-700 underline underline-offset-2'
+            disabled={isLoggingOut}
+            className='text-grey-700 underline underline-offset-2 disabled:opacity-50'
           >
             로그아웃
           </button>
