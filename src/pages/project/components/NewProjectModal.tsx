@@ -107,101 +107,131 @@ const NewProjectModal = ({ isOpen, closeModal }: Props) => {
         <div className='flex flex-col gap-12'>
           <label className='block h-20 text-14 font-500'>카테고리</label>
           <div className='flex gap-8'>
-            {PopupCategoryEnum.options.map((category) => (
-              <Controller
-                key={category}
-                control={control}
-                name='popupCategory'
-                render={({ field }) => (
-                  <button
-                    key={category}
-                    type='button'
-                    onClick={() => field.onChange(category)}
-                    className={`rounded-6 border border-grey-400 px-8 py-[2px] text-14 font-400 text-grey-700 transition-all ${
-                      category === field.value &&
-                      'border-primary-500 bg-primary-50 text-primary-500'
-                    }`}
-                  >
-                    {POPUP_CATEGORY_TO_TEXT[category]}
-                  </button>
-                )}
-              />
-            ))}
+            <Controller
+              control={control}
+              name='popupCategory'
+              render={({ field }) => (
+                <>
+                  {PopupCategoryEnum.options.map((category) => (
+                    <button
+                      key={category}
+                      type='button'
+                      onClick={() => field.onChange(category)}
+                      className={`rounded-6 border border-grey-400 px-8 py-[2px] text-14 font-400 text-grey-700 transition-all ${
+                        category === field.value &&
+                        'border-primary-500 bg-primary-50 text-primary-500'
+                      }`}
+                    >
+                      {POPUP_CATEGORY_TO_TEXT[category]}
+                    </button>
+                  ))}
+                </>
+              )}
+            />
           </div>
         </div>
         <div className='flex flex-col gap-12'>
           <label className='block h-20 text-14 font-500'>유형</label>
           <div className='flex gap-8'>
-            {PopupTypeEnum.options.map((type) => (
-              <Controller
-                key={type}
-                control={control}
-                name='popupType'
-                render={({ field }) => (
-                  <button
-                    key={type}
-                    type='button'
-                    onClick={() => field.onChange(type)}
-                    className={`rounded-6 border border-grey-400 px-8 py-[2px] text-14 font-400 text-grey-700 transition-all ${
-                      type === field.value &&
-                      'border-primary-500 bg-primary-50 text-primary-500'
-                    }`}
-                  >
-                    {POPUP_TYPE_TO_TEXT[type]}
-                  </button>
-                )}
-              />
-            ))}
+            <Controller
+              control={control}
+              name='popupType'
+              render={({ field }) => (
+                <>
+                  {PopupTypeEnum.options.map((type) => (
+                    <button
+                      key={type}
+                      type='button'
+                      onClick={() => field.onChange(type)}
+                      className={`rounded-6 border border-grey-400 px-8 py-[2px] text-14 font-400 text-grey-700 transition-all ${
+                        type === field.value &&
+                        'border-primary-500 bg-primary-50 text-primary-500'
+                      }`}
+                    >
+                      {POPUP_TYPE_TO_TEXT[type]}
+                    </button>
+                  ))}
+                </>
+              )}
+            />
           </div>
         </div>
         <div className='flex flex-col gap-12'>
-          <label className='block h-20 text-14 font-500'>연령대</label>
+          <label className='block h-20 text-14 font-500'>연령대 (1순위)</label>
           <div className='flex gap-8'>
-            {AgeGroupEnum.options.map((ageGroup) => (
-              <Controller
-                key={ageGroup}
-                control={control}
-                name='primaryTargetAgeGroup'
-                render={({ field }) => (
-                  <button
-                    key={ageGroup}
-                    type='button'
-                    onClick={() => field.onChange(ageGroup)}
-                    className={`rounded-6 border border-grey-400 px-8 py-[2px] text-14 font-400 text-grey-700 transition-all ${
-                      ageGroup === field.value &&
-                      'border-primary-500 bg-primary-50 text-primary-500'
-                    }`}
-                  >
-                    {AGE_GROUP_TO_TEXT[ageGroup]}
-                  </button>
-                )}
-              />
-            ))}
+            <Controller
+              control={control}
+              name='primaryTargetAgeGroup'
+              render={({ field }) => (
+                <>
+                  {AgeGroupEnum.options.map((ageGroup) => (
+                    <button
+                      key={ageGroup}
+                      type='button'
+                      onClick={() => field.onChange(ageGroup)}
+                      className={`rounded-6 border border-grey-400 px-8 py-[2px] text-14 font-400 text-grey-700 transition-all ${
+                        ageGroup === field.value &&
+                        'border-primary-500 bg-primary-50 text-primary-500'
+                      }`}
+                    >
+                      {AGE_GROUP_TO_TEXT[ageGroup]}
+                    </button>
+                  ))}
+                </>
+              )}
+            />
+          </div>
+        </div>
+        <div className='flex flex-col gap-12'>
+          <label className='block h-20 text-14 font-500'>연령대 (2순위)</label>
+          <div className='flex gap-8'>
+            <Controller
+              control={control}
+              name='secondaryTargetAgeGroup'
+              render={({ field }) => (
+                <>
+                  {AgeGroupEnum.options.map((ageGroup) => (
+                    <button
+                      key={ageGroup}
+                      type='button'
+                      onClick={() => field.onChange(ageGroup)}
+                      className={`rounded-6 border border-grey-400 px-8 py-[2px] text-14 font-400 text-grey-700 transition-all ${
+                        ageGroup === field.value &&
+                        'border-primary-500 bg-primary-50 text-primary-500'
+                      }`}
+                    >
+                      {AGE_GROUP_TO_TEXT[ageGroup]}
+                    </button>
+                  ))}
+                </>
+              )}
+            />
           </div>
         </div>
         <div className='flex flex-col gap-12'>
           <label className='block h-20 text-14 font-500'>브랜드 규모</label>
           <div className='flex gap-8'>
-            {BrandScaleEnum.options.map((brandScale) => (
-              <Controller
-                key={brandScale}
-                control={control}
-                name='brandScale'
-                render={({ field }) => (
-                  <button
-                    key={brandScale}
-                    type='button'
-                    onClick={() => field.onChange(brandScale)}
-                    className={`rounded-6 border border-grey-400 px-8 py-[2px] text-14 font-400 text-grey-700 transition-all ${
-                      brandScale === field.value &&
-                      'border-primary-500 bg-primary-50 text-primary-500'
-                    }`}
-                  >
-                    {BRAND_SCALE_TO_TEXT[brandScale]}
-                  </button>
-                )}
-              />
-            ))}
+            <Controller
+              control={control}
+              name='brandScale'
+              render={({ field }) => (
+                <>
+                  {BrandScaleEnum.options.map((brandScale) => (
+                    <button
+                      key={brandScale}
+                      type='button'
+                      onClick={() => field.onChange(brandScale)}
+                      className={`rounded-6 border border-grey-400 px-8 py-[2px] text-14 font-400 text-grey-700 transition-all ${
+                        brandScale === field.value &&
+                        'border-primary-500 bg-primary-50 text-primary-500'
+                      }`}
+                    >
+                      {BRAND_SCALE_TO_TEXT[brandScale]}
+                    </button>
+                  ))}
+                </>
+              )}
+            />
           </div>
         </div>
         <TextArea control={control} name='projectGoal'>

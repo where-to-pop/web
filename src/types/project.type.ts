@@ -43,11 +43,11 @@ export const ProjectSchema = z.object({
   popupType: PopupTypeEnum,
   duration: z.string(),
   primaryTargetAgeGroup: AgeGroupEnum,
-  secondaryTargetAgeGroup: AgeGroupEnum,
+  secondaryTargetAgeGroup: AgeGroupEnum.optional(),
   brandScale: BrandScaleEnum,
   projectGoal: z.string(),
-  additionalBrandInfo: z.string(),
-  additionalProjectInfo: z.string(),
+  additionalBrandInfo: z.string().optional(),
+  additionalProjectInfo: z.string().optional(),
   ownerId: z.string(),
 });
 export type Project = z.infer<typeof ProjectSchema>;
