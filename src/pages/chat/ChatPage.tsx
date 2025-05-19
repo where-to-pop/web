@@ -88,7 +88,7 @@ const ChatPage = () => {
     <>
       <section
         ref={messagesContainer}
-        className='relative flex-1 overflow-y-auto pb-200 pt-24'
+        className='scrollbar-hide relative flex-1 overflow-y-auto pb-200 pt-24'
       >
         <ul className='mx-auto max-w-900'>
           {messages.map((message) =>

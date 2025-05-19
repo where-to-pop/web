@@ -14,7 +14,7 @@ const Tabs = <T,>({ items, selected, onSelect, className }: Props<T>) => {
   return (
     <div
       className={customTwMerge(
-        'scrollbar-hidden relative flex w-full flex-row overflow-x-scroll bg-transparent',
+        'scrollbar-hidden relative flex w-full flex-row overflow-x-auto bg-transparent',
         className,
       )}
     >

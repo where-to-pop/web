@@ -11,7 +11,7 @@ interface Props {
 const Input = forwardRef<HTMLTextAreaElement, Props>(
   ({ value, onChange, onSubmit, disabled }, ref) => {
     return (
-      <section className='absolute bottom-0 left-[calc(50%-10px)] h-120 w-full max-w-900 -translate-x-1/2 rounded-t-16 bg-[#F8F9FA] pb-24'>
+      <section className='absolute bottom-0 left-1/2 h-120 w-full max-w-900 -translate-x-1/2 rounded-t-16 bg-[#F8F9FA] pb-24'>
         <textarea
           ref={ref}
           value={value}

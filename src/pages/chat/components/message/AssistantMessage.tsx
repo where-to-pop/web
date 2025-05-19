@@ -25,7 +25,7 @@ const AssistantMessage = ({ message }: Props) => {
           onSelect={setSelected}
         />
       </div>
-      <div className='py-8'>
+      <div className='w-full py-8'>
         {selected === 'text' ? (
           <TextTab text={message.content} />
         ) : (
