@@ -14,15 +14,13 @@ const ChatPage = () => {
   const { mutateAsync: postMessage } = usePostMessage();
   const [messages, setMessages] = useState<Message[]>([]);
 
-  const isInitiated = useRef(false);
   useEffect(() => {
-    if (isInitiated.current || !chat) {
+    if (!chat) {
       return;
     }
-    isInitiated.current = true;
     setMessages(chat.messages);
     scrollToBottom();
-  }, [chat]);
+  }, [chat, chatId]);
 
   const [value, setValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
