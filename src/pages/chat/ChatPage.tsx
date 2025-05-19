@@ -88,7 +88,7 @@ const ChatPage = () => {
     <>
       <section
         ref={messagesContainer}
-        className='scrollbar-hide relative flex-1 overflow-y-auto pb-200 pt-24'
+        className='relative flex-1 overflow-y-auto pb-200 pt-24 scrollbar-hide'
       >
         <ul className='mx-auto max-w-900'>
           {messages.map((message) =>
@@ -101,6 +101,7 @@ const ChatPage = () => {
         </ul>
       </section>
       <Input
+        ref={inputRef}
         value={value}
         onChange={setValue}
         onSubmit={handleSubmit}
