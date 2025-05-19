@@ -13,8 +13,8 @@ export const ChatSchema = z.object({
   projectId: z.string(),
   isActive: z.boolean(),
   title: z.string(),
-  createdAt: z.number(),
-  updatedAt: z.number(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
 });
 export type Chat = z.infer<typeof ChatSchema>;
 
@@ -22,7 +22,7 @@ export const MessageSchema = z.object({
   id: z.string(),
   role: RoleEnum,
   content: z.string(),
-  createdAt: z.number(),
+  createdAt: z.string(),
 });
 export type Message = z.infer<typeof MessageSchema>;
 

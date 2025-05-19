@@ -32,7 +32,7 @@ const ChatPage = () => {
         id: '',
         role: 'USER',
         content: value,
-        createdAt: Date.now(),
+        createdAt: new Date().toISOString(),
       },
     ]);
 
