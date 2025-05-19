@@ -1,3 +1,5 @@
+import ReactMarkdown from 'react-markdown';
+
 interface Props {
   text: string;
 }
@@ -5,7 +7,7 @@ interface Props {
 const TextTab = ({ text }: Props) => {
   return (
     <p className='whitespace-pre-wrap text-14 font-400 leading-[180%]'>
-      {text}
+      <ReactMarkdown>{text}</ReactMarkdown>
     </p>
   );
 };

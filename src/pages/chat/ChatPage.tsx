@@ -101,7 +101,6 @@ const ChatPage = () => {
         </ul>
       </section>
       <Input
-        ref={inputRef}
         value={value}
         onChange={setValue}
         onSubmit={handleSubmit}
