@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 import { extendTailwindMerge } from 'tailwind-merge';
+import scrollbarHide from 'tailwind-scrollbar-hide';
 
 const createPxEntries = (size: number) => {
   return {
@@ -79,7 +80,7 @@ const config = {
       red: 'rgb(var(--red) / <alpha-value>)',
     },
   },
-  plugins: [],
+  plugins: [scrollbarHide],
 };
 
 export default config;

@@ -17,7 +17,7 @@ const ChatLayout = () => {
   );
 
   return (
-    <div className='flex h-full w-full'>
+    <div className='flex h-full w-full overflow-hidden'>
       <NavBar
         projectId={projectId ?? ''}
         chats={chatsOfProject}
