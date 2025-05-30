@@ -90,7 +90,7 @@ const ChatPage = () => {
         ref={messagesContainer}
         className='relative flex-1 overflow-y-auto pb-200 pt-24 scrollbar-hide'
       >
-        <ul className='mx-auto max-w-900'>
+        <ul className='mx-auto max-w-900 px-16'>
           {messages.map((message) =>
             message.role === 'USER' ? (
               <UserMessage key={message.id} message={message} />
