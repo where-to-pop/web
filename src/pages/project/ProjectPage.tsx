@@ -1,4 +1,3 @@
-import { IconAddSquare } from 'public/icons';
 import ProjectCard from './components/ProjectCard';
 import NewProjectModal from './components/NewProjectModal';
 import { useState } from 'react';
