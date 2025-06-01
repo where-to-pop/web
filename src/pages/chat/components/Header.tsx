@@ -18,7 +18,7 @@ const Header = ({ project, currentChatTitle }: Props) => {
         <button
           type='button'
           onClick={() => {
-            navigate('/project');
+            navigate(`/project/${project?.id}`);
           }}
         >
           {project?.name ?? ''}
@@ -27,6 +27,16 @@ const Header = ({ project, currentChatTitle }: Props) => {
       <h2 className='text-14 font-500 text-primary-500/80'>
         {formattedCurrentChatTitle ?? ''}
       </h2>
+      <h1 className='ml-auto text-16 font-500 text-primary-500'>
+        <button
+          type='button'
+          onClick={() => {
+            navigate('/project');
+          }}
+        >
+          WHERE TO POP
+        </button>
+      </h1>
     </header>
   );
 };
