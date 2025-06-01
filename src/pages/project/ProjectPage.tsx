@@ -41,17 +41,26 @@ const ProjectPage = () => {
             로그아웃
           </button>
         </nav>
-        <main className='p-28 pt-36'>
-          <ul className='mx-auto flex max-w-1236 flex-wrap gap-12'>
+        <main className='mx-auto max-w-1236 p-28 pt-36'>
+          <div className='mb-24 flex items-center justify-between'>
+            <h2 className='text-18 font-500'>현재 진행 중인 프로젝트들</h2>
+            <button
+              onClick={() => setIsNewProjectModalOpen(true)}
+              className='rounded-4 bg-primary-500 px-8 py-4 text-14 font-400 text-white'
+            >
+              추가하기
+            </button>
+          </div>
+          <ul className='flex flex-wrap gap-12'>
             {projects?.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
-            <button
+            {/* <button
               onClick={() => setIsNewProjectModalOpen(true)}
               className='relative flex h-300 w-300 items-center justify-center rounded-6 bg-grey-100'
             >
               <IconAddSquare width={32} height={32} />
-            </button>
+            </button> */}
           </ul>
         </main>
       </div>

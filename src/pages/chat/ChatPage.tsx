@@ -19,7 +19,7 @@ const ChatPage = () => {
       return;
     }
     setMessages(chat.messages);
-    scrollToBottom();
+    setScrollToBottom();
   }, [chat, chatId]);
 
   const [value, setValue] = useState('');
@@ -62,6 +62,17 @@ const ChatPage = () => {
   };
 
   const messagesContainer = useRef<HTMLDivElement>(null);
+  const setScrollToBottom = () => {
+    setTimeout(() => {
+      if (!messagesContainer.current) {
+        return;
+      }
+      messagesContainer.current.scrollTo({
+        top: messagesContainer.current.scrollHeight,
+        behavior: 'instant',
+      });
+    }, 0);
+  };
   const scrollToBottom = () => {
     setTimeout(() => {
       if (!messagesContainer.current) {

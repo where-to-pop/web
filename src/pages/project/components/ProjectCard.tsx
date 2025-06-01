@@ -24,14 +24,20 @@ const ProjectCard = ({ project }: Props) => {
   return (
     <button
       onClick={handleClick}
-      className='relative h-300 w-300 overflow-hidden rounded-6'
-      style={{ backgroundColor: color }}
+      className='relative h-280 w-300 overflow-hidden rounded-4 border border-grey-200 bg-white'
     >
-      <div className='absolute inset-0 bg-gradient-to-t from-black/45 to-transparent' />
-      <div className='absolute bottom-12 right-16 flex flex-col text-right text-white'>
-        <h4 className='pb-[2px] text-12 font-400'>{project.brandName}</h4>
-        <h1 className='pb-4 text-24 font-600'>{project.name}</h1>
-        <h1 className='text-12 font-400'>{formattedDuration}</h1>
+      <h4
+        className='absolute left-1/2 top-92 -translate-x-1/2 text-[36px] font-700 text-grey-200'
+        style={{
+          color: color,
+        }}
+      >
+        {project.brandName}
+      </h4>
+      <div className='absolute bottom-84 left-1/2 h-[1px] w-260 -translate-x-1/2 bg-grey-200' />
+      <div className='absolute bottom-20 left-20 flex flex-col text-left text-black'>
+        <h1 className='text-18 font-600'>{project.name}</h1>
+        <h1 className='text-12 font-400 text-grey-600'>{formattedDuration}</h1>
       </div>
     </button>
   );

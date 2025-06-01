@@ -13,7 +13,7 @@ interface Props {
 
 const Layout = ({ children }: Props) => {
   return (
-    <div className='relative h-[100dvh] w-[100dvw] bg-[#F8F9FA]'>
+    <div className='relative h-[100dvh] w-[100dvw] bg-[#F5F5F7]'>
       {children}
     </div>
   );
