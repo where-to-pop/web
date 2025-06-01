@@ -15,6 +15,10 @@ const ChatLayout = () => {
     () => chats?.filter((chat) => chat.projectId === projectId) ?? [],
     [chats, projectId],
   );
+  const currentChatTitle = useMemo(
+    () => chats?.find((chat) => chat.id === chatId)?.title ?? '',
+    [chats, chatId],
+  );
 
   return (
     <div className='flex h-full w-full overflow-hidden'>
@@ -24,7 +28,7 @@ const ChatLayout = () => {
         currentChatId={chatId}
       />
       <main className='relative flex flex-1 flex-col'>
-        <Header project={project} />
+        <Header project={project} currentChatTitle={currentChatTitle} />
         <Outlet />
       </main>
     </div>
