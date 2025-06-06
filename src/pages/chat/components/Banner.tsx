@@ -14,7 +14,7 @@ const Banner = ({ brandName, handleQuestionClick }: Props) => {
           <p
             key={question}
             onClick={() => handleQuestionClick(question)}
-            className='cursor-pointer text-14 font-400 text-grey-600 underline underline-offset-2 transition-all duration-150 hover:text-primary-500'
+            className='cursor-pointer text-14 font-400 text-grey-500 underline underline-offset-2 transition-all duration-150 hover:text-primary-500'
           >
             {question}
           </p>

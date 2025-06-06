@@ -150,8 +150,6 @@ const useChat = ({ chatId }: Props) => {
     };
   };
 
-  console.log('MESSAGES: ', messages);
-
   return {
     messagesContainerRef,
     inputRef,

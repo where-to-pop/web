@@ -1,8 +1,8 @@
 import dayjs from 'dayjs';
 import UserMessage from './message/UserMessage';
 import Tabs from 'src/components/Tabs';
-import LoadingDots from 'src/components/LoadingDots';
 import { useState } from 'react';
+import LoadingPhase from './message/LoadingPhase';
 
 interface Props {
   content: string;
@@ -33,14 +33,11 @@ const MockNewChat = ({ content }: Props) => {
             disabled={true}
           />
         </div>
-        <div className='w-full px-12 py-8'>
-          {/* <p className='text-14 font-400'>{phase}</p> */}
-          <div className='flex text-14 font-500 text-grey-600'>
-            질문 분석 중
-            <div>
-              <LoadingDots />
-            </div>
-          </div>
+        <div className='w-full py-8'>
+          <LoadingPhase
+            phase={'PLANNING'}
+            phaseMessage='요구사항을 분석하고 있어요'
+          />
         </div>
       </article>
     </ul>

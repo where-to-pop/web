@@ -15,7 +15,7 @@ const LoadingDots = () => {
   }, []);
 
   return (
-    <span className='inline-block min-w-[24px] text-grey-600'>{dots}</span>
+    <span className='inline-block min-w-[24px] text-[#00CCCC]'>{dots}</span>
   );
 };
 

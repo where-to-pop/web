@@ -4,6 +4,7 @@ import TextTab from './TextTab';
 import ChartTab from './ChartTab';
 import { ExecutionPhase, Message } from 'src/types/chat.type';
 import LoadingDots from 'src/components/LoadingDots';
+import LoadingPhase from './LoadingPhase';
 
 type ChatTab = 'text' | 'chart';
 
@@ -43,15 +44,7 @@ const AssistantMessage = ({ message, phase, phaseMessage }: Props) => {
             <ChartTab />
           ))}
         {isGenerating && (
-          <div className='px-12'>
-            {/* <p className='text-14 font-400'>{phase}</p> */}
-            <div className='flex text-14 font-500 text-grey-600'>
-              {phaseMessage}
-              <div>
-                <LoadingDots />
-              </div>
-            </div>
-          </div>
+          <LoadingPhase phase={phase} phaseMessage={phaseMessage} />
         )}
       </div>
     </article>
