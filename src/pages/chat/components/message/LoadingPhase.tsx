@@ -17,7 +17,6 @@ const LoadingPhase = ({ phase, phaseMessage }: Props) => {
       if (!message || lastMessage === message) {
         return prev;
       }
-      console.log('push!: ', message);
       return [...prev, message];
     });
   };
