@@ -7,7 +7,7 @@ interface Props {
 
 const TextTab = ({ text }: Props) => {
   return (
-    <div className='px-12 text-16 font-400 leading-[140%]'>
+    <div className='px-12 text-16 font-400 leading-[140%] text-black'>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
@@ -16,7 +16,7 @@ const TextTab = ({ text }: Props) => {
               style={{
                 fontSize: '22px',
                 fontWeight: '600',
-                margin: '16px 0 8px',
+                margin: '20px 0 12px',
               }}
               {...props}
             />
@@ -26,7 +26,7 @@ const TextTab = ({ text }: Props) => {
               style={{
                 fontSize: '20px',
                 fontWeight: '500',
-                margin: '16px 0 8px',
+                margin: '20px 0 12px',
               }}
               {...props}
             />
@@ -36,7 +36,7 @@ const TextTab = ({ text }: Props) => {
               style={{
                 fontSize: '18px',
                 fontWeight: '500',
-                margin: '16px 0 8px',
+                margin: '20px 0 12px',
               }}
               {...props}
             />
@@ -44,7 +44,7 @@ const TextTab = ({ text }: Props) => {
           p: ({ node, ...props }) => (
             <p
               style={{
-                marginBottom: '12px',
+                marginBottom: '20px',
                 lineHeight: '1.5',
               }}
               {...props}
@@ -54,8 +54,9 @@ const TextTab = ({ text }: Props) => {
             <ol
               style={{
                 listStyleType: 'decimal',
-                paddingLeft: '20px',
-                marginBottom: '12px',
+                paddingLeft: '32px',
+                marginTop: '12px',
+                marginBottom: '24px',
               }}
               {...props}
             />
@@ -64,9 +65,9 @@ const TextTab = ({ text }: Props) => {
             <ul
               style={{
                 listStyleType: 'disc',
-                paddingLeft: '12px',
-                marginTop: '6px',
-                marginBottom: '16px',
+                paddingLeft: '32px',
+                marginTop: '12px',
+                marginBottom: '24px',
               }}
               {...props}
             />
@@ -81,11 +82,15 @@ const TextTab = ({ text }: Props) => {
             />
           ),
           strong: ({ node, ...props }) => (
-            <strong style={{ fontWeight: 600 }} {...props} />
+            <strong style={{ fontWeight: 500 }} {...props} />
           ),
           a: ({ node, ...props }) => (
             <a
-              style={{ color: '#0066CC', textDecoration: 'underline' }}
+              style={{
+                color: '#0066CC',
+                textDecoration: 'underline',
+                fontWeight: '400',
+              }}
               {...props}
             />
           ),
