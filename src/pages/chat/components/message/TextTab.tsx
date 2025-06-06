@@ -83,6 +83,12 @@ const TextTab = ({ text }: Props) => {
           strong: ({ node, ...props }) => (
             <strong style={{ fontWeight: 600 }} {...props} />
           ),
+          a: ({ node, ...props }) => (
+            <a
+              style={{ color: '#0066CC', textDecoration: 'underline' }}
+              {...props}
+            />
+          ),
         }}
       >
         {text}

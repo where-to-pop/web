@@ -7,6 +7,7 @@ import { EventSourcePolyfill } from 'event-source-polyfill';
 import { toast } from 'react-toastify';
 import useInputFocus from './useInputFocus';
 import { useQueryClient } from '@tanstack/react-query';
+import dayjs from 'dayjs';
 
 interface Props {
   chatId: string;
@@ -53,7 +54,7 @@ const useChat = ({ chatId }: Props) => {
       id: TEMP_USER_MESSAGE_ID,
       role: 'USER',
       content: value,
-      createdAt: new Date().toISOString(),
+      createdAt: dayjs().toISOString(),
     });
     scrollToBottom('smooth');
 
@@ -110,7 +111,7 @@ const useChat = ({ chatId }: Props) => {
         id: TEMP_ASSISTANT_MESSAGE_ID,
         role: 'ASSISTANT',
         content: '',
-        createdAt: new Date().toISOString(),
+        createdAt: dayjs().toISOString(),
       });
       console.log('연결 생성 완료');
     };

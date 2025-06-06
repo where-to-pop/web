@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Tabs from 'src/components/Tabs';
 import TextTab from './TextTab';
 import ChartTab from './ChartTab';
 import { ExecutionPhase, Message } from 'src/types/chat.type';
+import LoadingDots from 'src/components/LoadingDots';
 
 type ChatTab = 'text' | 'chart';
 
@@ -54,25 +55,6 @@ const AssistantMessage = ({ message, phase, phaseMessage }: Props) => {
         )}
       </div>
     </article>
-  );
-};
-
-const LoadingDots = () => {
-  const [dots, setDots] = useState('');
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDots((prev) => {
-        if (prev.length >= 3) return '';
-        return prev + '.';
-      });
-    }, 500);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <span className='inline-block min-w-[24px] text-grey-600'>{dots}</span>
   );
 };
 
