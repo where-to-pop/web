@@ -3,7 +3,6 @@ import Tabs from 'src/components/Tabs';
 import TextTab from './TextTab';
 import ChartTab from './ChartTab';
 import { ExecutionPhase, Message } from 'src/types/chat.type';
-import LoadingDots from 'src/components/LoadingDots';
 import LoadingPhase from './LoadingPhase';
 
 type ChatTab = 'text' | 'chart';
