@@ -26,7 +26,7 @@ const NavBar = ({ projectId, chats, currentChatId }: Props) => {
       </div>
       <div className='absolute bottom-0 left-[-130px] top-0 z-base w-200 bg-grey-200/95 px-[10px] py-20 transition-all duration-300 group-hover:translate-x-200'>
         <h2 className='pb-8 text-12 font-400 text-grey-500'>채팅방 목록</h2>
-        <ul className='scrollbar-hide h-full overflow-y-auto'>
+        <ul className='h-full overflow-y-auto scrollbar-hide'>
           {chats.map((chat) => (
             <li key={chat.id} className='border-b border-grey-300/60'>
               <button
@@ -36,7 +36,9 @@ const NavBar = ({ projectId, chats, currentChatId }: Props) => {
                     : 'text-grey-700'
                 }`}
                 onClick={() => {
-                  navigate(`/project/${chat.projectId}/chat/${chat.id}`);
+                  navigate(`/project/${chat.projectId}/chat/${chat.id}`, {
+                    preventScrollReset: false,
+                  });
                 }}
               >
                 {chat.title}

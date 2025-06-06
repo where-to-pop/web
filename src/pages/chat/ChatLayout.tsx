@@ -29,7 +29,7 @@ const ChatLayout = () => {
       />
       <main className='relative flex flex-1 flex-col'>
         <Header project={project} currentChatTitle={currentChatTitle} />
-        <Outlet />
+        <Outlet key={chatId} />
       </main>
     </div>
   );

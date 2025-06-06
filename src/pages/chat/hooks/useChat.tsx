@@ -105,14 +105,14 @@ const useChat = ({ chatId }: Props) => {
 
     // 연결 생성 시 응답 빈 응답 메시지 추가
     eventSource.onopen = () => {
-      console.log('연결 생성 완료');
+      setIsLoading(true);
       pushMessage({
         id: TEMP_ASSISTANT_MESSAGE_ID,
         role: 'ASSISTANT',
         content: '',
         createdAt: new Date().toISOString(),
       });
-      setIsLoading(true);
+      console.log('연결 생성 완료');
     };
 
     // 메시지 수신 시 메시지 업데이트
@@ -149,6 +149,8 @@ const useChat = ({ chatId }: Props) => {
     };
   };
 
+  console.log('MESSAGES: ', messages);
+
   return {
     messagesContainerRef,
     inputRef,
@@ -157,6 +159,7 @@ const useChat = ({ chatId }: Props) => {
     setValue,
     isLoading,
     handleSubmit,
+    handleFetchSSE,
     phase,
     phaseMessage,
   };

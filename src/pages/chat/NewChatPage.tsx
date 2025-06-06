@@ -21,13 +21,13 @@ const NewChatPage = () => {
   const { mutateAsync: postChat, isPending: isPosting } = usePostChat();
   const [value, setValue] = useState('');
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (value: string) => {
     try {
       const newChat = await postChat({
         projectId: projectId ?? '',
         initialMessage: value,
       });
-      navigate(`/project/${projectId}/chat/${newChat.id}`);
+      navigate(`/project/${projectId}/chat/${newChat.id}?isNew=true`);
     } catch (error) {
       console.error(error);
       toast.error('채팅 생성에 실패했습니다.');
@@ -36,7 +36,7 @@ const NewChatPage = () => {
 
   const handleQuestionClick = (question: string) => {
     setValue(question);
-    handleSubmit();
+    handleSubmit(question);
   };
 
   return (
@@ -64,7 +64,7 @@ const NewChatPage = () => {
       <Input
         value={value}
         onChange={setValue}
-        onSubmit={handleSubmit}
+        onSubmit={() => handleSubmit(value)}
         disabled={isPosting}
       />
     </>

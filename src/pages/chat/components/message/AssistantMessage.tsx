@@ -44,12 +44,12 @@ const AssistantMessage = ({ message, phase, phaseMessage }: Props) => {
         {isGenerating && (
           <div className='px-12'>
             {/* <p className='text-14 font-400'>{phase}</p> */}
-            <p className='flex text-14 font-500 text-grey-600'>
+            <div className='flex text-14 font-500 text-grey-600'>
               {phaseMessage}
               <div>
                 <LoadingDots />
               </div>
-            </p>
+            </div>
           </div>
         )}
       </div>
@@ -63,7 +63,7 @@ const LoadingDots = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setDots((prev) => {
-        if (prev === '...') return '';
+        if (prev.length >= 3) return '';
         return prev + '.';
       });
     }, 500);
