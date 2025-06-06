@@ -24,7 +24,7 @@ const getApiResponseSchema = <T extends z.ZodTypeAny>(schema: T) =>
     })
     .strict();
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+export const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 class Instance {
   constructor(private readonly baseUrl: string = BASE_URL ?? '') {}

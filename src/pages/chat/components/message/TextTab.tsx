@@ -7,15 +7,35 @@ interface Props {
 
 const TextTab = ({ text }: Props) => {
   return (
-    <p className='px-12 text-14 font-400 leading-[140%]'>
+    <div className='px-12 text-16 font-400 leading-[140%]'>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
           h1: ({ node, ...props }) => (
             <h1
               style={{
+                fontSize: '22px',
+                fontWeight: '600',
+                margin: '16px 0 8px',
+              }}
+              {...props}
+            />
+          ),
+          h2: ({ node, ...props }) => (
+            <h2
+              style={{
                 fontSize: '20px',
-                fontWeight: '400',
+                fontWeight: '500',
+                margin: '16px 0 8px',
+              }}
+              {...props}
+            />
+          ),
+          h3: ({ node, ...props }) => (
+            <h3
+              style={{
+                fontSize: '18px',
+                fontWeight: '500',
                 margin: '16px 0 8px',
               }}
               {...props}
@@ -26,7 +46,6 @@ const TextTab = ({ text }: Props) => {
               style={{
                 marginBottom: '12px',
                 lineHeight: '1.5',
-                fontSize: '16px',
               }}
               {...props}
             />
@@ -57,7 +76,6 @@ const TextTab = ({ text }: Props) => {
               style={{
                 marginBottom: '4px',
                 lineHeight: '1.4',
-                fontSize: '14px',
               }}
               {...props}
             />
@@ -69,7 +87,7 @@ const TextTab = ({ text }: Props) => {
       >
         {text}
       </ReactMarkdown>
-    </p>
+    </div>
   );
 };
 
