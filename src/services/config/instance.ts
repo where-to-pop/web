@@ -98,7 +98,7 @@ class Instance {
       await this.tokenUpdatePromise;
     } catch (e) {
       const error = e as CustomError;
-      // TODO: 로그인 페이지로 이동
+      window.location.href = '/';
       throw error;
     } finally {
       this.tokenUpdatePromise = null;
