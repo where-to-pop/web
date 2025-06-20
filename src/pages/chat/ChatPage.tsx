@@ -38,6 +38,12 @@ const ChatPage = () => {
     }
   }, [isNew, messages.length]);
 
+  const isError =
+    !isLoading &&
+    messages.length > 0 &&
+    messages[messages.length - 1].role === 'USER';
+  const showLoading = messages.length === 1;
+
   return (
     <>
       <section
@@ -58,7 +64,8 @@ const ChatPage = () => {
               />
             );
           })}
-          {isNew && <MockAssistantMessage />}
+          {showLoading && <LoadingAssistantMessage />}
+          {isError && <ErrorAssistantMessage />}
         </ul>
       </section>
       <Input
@@ -75,7 +82,7 @@ const ChatPage = () => {
 
 export default ChatPage;
 
-const MockAssistantMessage = () => {
+const LoadingAssistantMessage = () => {
   return (
     <article className='mb-48 flex flex-col gap-8 border-b border-grey-200 pb-24'>
       <div className='w-300'>
@@ -92,7 +99,28 @@ const MockAssistantMessage = () => {
         <LoadingPhase
           phase={'PLANNING'}
           phaseMessage='요구사항을 분석하고 있어요'
+          isAnimationEnabled={false}
         />
+      </div>
+    </article>
+  );
+};
+
+const ErrorAssistantMessage = () => {
+  return (
+    <article className='mb-48 flex flex-col gap-8 border-b border-grey-200 pb-24'>
+      <div className='w-300'>
+        <Tabs
+          items={[
+            { label: '답변', value: 'text' },
+            { label: '차트', value: 'chart' },
+          ]}
+          selected={'text'}
+          disabled={true}
+        />
+      </div>
+      <div className='w-full py-8 text-red'>
+        답변 생성 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.
       </div>
     </article>
   );

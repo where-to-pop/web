@@ -16,9 +16,11 @@ const NewChatPage = () => {
 
   const { mutateAsync: postChat, isPending: isPosting } = usePostChat();
   const [value, setValue] = useState('');
+  const [submittedValue, setSubmittedValue] = useState('');
 
   const handleSubmit = async (value: string) => {
     try {
+      setSubmittedValue(value);
       const newChat = await postChat({
         projectId: projectId ?? '',
         initialMessage: value,
@@ -31,7 +33,6 @@ const NewChatPage = () => {
   };
 
   const handleQuestionClick = (question: string) => {
-    setValue(question);
     handleSubmit(question);
   };
 
@@ -44,7 +45,7 @@ const NewChatPage = () => {
             handleQuestionClick={handleQuestionClick}
           />
         ) : (
-          <MockNewChat content={value} />
+          <MockNewChat content={submittedValue} />
         )}
       </section>
       <Input

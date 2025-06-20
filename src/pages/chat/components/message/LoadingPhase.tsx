@@ -7,9 +7,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 interface Props {
   phase?: ExecutionPhase;
   phaseMessage?: string | null | undefined;
+  isAnimationEnabled?: boolean;
 }
 
-const LoadingPhase = ({ phase, phaseMessage }: Props) => {
+const LoadingPhase = ({
+  phase,
+  phaseMessage,
+  isAnimationEnabled = true,
+}: Props) => {
   const [phaseMessages, setPhaseMessages] = useState<string[]>([]);
   const pushPhaseMessage = (message: string | null | undefined) => {
     setPhaseMessages((prev) => {
@@ -29,28 +34,47 @@ const LoadingPhase = ({ phase, phaseMessage }: Props) => {
 
   return (
     <div className='flex flex-col'>
-      <AnimatePresence>
-        {phaseMessages.map((message, index) => {
-          const isFirst = index === 0;
-          const isPast = index < phaseMessages.length - 1;
-          return (
-            <motion.div
-              key={message + index}
-              initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
-            >
-              {!isFirst && isPast && <LongLine />}
-              {isPast ? (
-                <PastLoadingPhase phaseMessage={message} />
-              ) : (
-                <CurrentLoadingPhase phaseMessage={message} />
-              )}
-            </motion.div>
-          );
-        })}
-      </AnimatePresence>
+      {isAnimationEnabled ? (
+        <AnimatePresence>
+          {phaseMessages.map((message, index) => {
+            const isFirst = index === 0;
+            const isPast = index < phaseMessages.length - 1;
+            return (
+              <motion.div
+                key={message + index}
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+              >
+                {!isFirst && isPast && <LongLine />}
+                {isPast ? (
+                  <PastLoadingPhase phaseMessage={message} />
+                ) : (
+                  <CurrentLoadingPhase phaseMessage={message} />
+                )}
+              </motion.div>
+            );
+          })}
+        </AnimatePresence>
+      ) : (
+        <>
+          {phaseMessages.map((message, index) => {
+            const isFirst = index === 0;
+            const isPast = index < phaseMessages.length - 1;
+            return (
+              <div key={message + index}>
+                {!isFirst && isPast && <LongLine />}
+                {isPast ? (
+                  <PastLoadingPhase phaseMessage={message} />
+                ) : (
+                  <CurrentLoadingPhase phaseMessage={message} />
+                )}
+              </div>
+            );
+          })}
+        </>
+      )}
     </div>
   );
 };
