@@ -56,6 +56,14 @@ const useChat = ({ chatId }: Props) => {
       content: value,
       createdAt: dayjs().toISOString(),
     });
+    pushMessage({
+      id: TEMP_ASSISTANT_MESSAGE_ID,
+      role: 'ASSISTANT',
+      content: '',
+      createdAt: dayjs().toISOString(),
+    });
+    setPhase('PLANNING');
+    setPhaseMessage('요구사항을 분석하고 있어요');
     scrollToBottom('smooth');
 
     try {
@@ -107,12 +115,6 @@ const useChat = ({ chatId }: Props) => {
     // 연결 생성 시 응답 빈 응답 메시지 추가
     eventSource.onopen = () => {
       setIsLoading(true);
-      pushMessage({
-        id: TEMP_ASSISTANT_MESSAGE_ID,
-        role: 'ASSISTANT',
-        content: '',
-        createdAt: dayjs().toISOString(),
-      });
       console.log('연결 생성 완료');
     };
 
