@@ -9,8 +9,8 @@ interface Props {
 const Header = ({ project, currentChatTitle }: Props) => {
   const navigate = useNavigate();
   const formattedCurrentChatTitle =
-    currentChatTitle && currentChatTitle.length > 10
-      ? currentChatTitle.slice(0, 10) + '...'
+    currentChatTitle && currentChatTitle.length > 50
+      ? currentChatTitle.slice(0, 50) + '...'
       : currentChatTitle;
   return (
     <header className='flex h-48 w-full shrink-0 items-baseline gap-16 border-b border-grey-200 px-24 py-12'>
