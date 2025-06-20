@@ -85,12 +85,9 @@ export default ChatPage;
 const LoadingAssistantMessage = () => {
   return (
     <article className='mb-48 flex flex-col gap-8 border-b border-grey-200 pb-24'>
-      <div className='w-300'>
+      <div className='w-[150px]'>
         <Tabs
-          items={[
-            { label: '답변', value: 'text' },
-            { label: '차트', value: 'chart' },
-          ]}
+          items={[{ label: '답변', value: 'text' }]}
           selected={'text'}
           disabled={true}
         />
@@ -111,10 +108,7 @@ const ErrorAssistantMessage = () => {
     <article className='mb-48 flex flex-col gap-8 border-b border-grey-200 pb-24'>
       <div className='w-300'>
         <Tabs
-          items={[
-            { label: '답변', value: 'text' },
-            { label: '차트', value: 'chart' },
-          ]}
+          items={[{ label: '답변', value: 'text' }]}
           selected={'text'}
           disabled={true}
         />
