@@ -4,6 +4,8 @@ import AssistantMessage from './components/message/AssistantMessage';
 import UserMessage from './components/message/UserMessage';
 import useChat from './hooks/useChat';
 import { useEffect } from 'react';
+import Tabs from 'src/components/Tabs';
+import LoadingPhase from './components/message/LoadingPhase';
 // import ReportTab from './components/ReportTab';
 
 const ChatPage = () => {
@@ -56,6 +58,7 @@ const ChatPage = () => {
               />
             );
           })}
+          {isNew && <MockAssistantMessage />}
         </ul>
       </section>
       <Input
@@ -71,3 +74,26 @@ const ChatPage = () => {
 };
 
 export default ChatPage;
+
+const MockAssistantMessage = () => {
+  return (
+    <article className='mb-48 flex flex-col gap-8 border-b border-grey-200 pb-24'>
+      <div className='w-300'>
+        <Tabs
+          items={[
+            { label: '답변', value: 'text' },
+            { label: '차트', value: 'chart' },
+          ]}
+          selected={'text'}
+          disabled={true}
+        />
+      </div>
+      <div className='w-full py-8'>
+        <LoadingPhase
+          phase={'PLANNING'}
+          phaseMessage='요구사항을 분석하고 있어요'
+        />
+      </div>
+    </article>
+  );
+};
