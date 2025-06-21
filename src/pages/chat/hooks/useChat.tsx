@@ -54,6 +54,7 @@ const useChat = ({ chatId }: Props) => {
       id: TEMP_USER_MESSAGE_ID,
       role: 'USER',
       content: value,
+      stepResult: null,
       createdAt: dayjs().toISOString(),
     });
 
@@ -83,6 +84,7 @@ const useChat = ({ chatId }: Props) => {
     if (!chat || isLoading) {
       return;
     }
+    console.log('chat', chat);
     setMessages(chat.messages);
     if (!isInitialized.current) {
       isInitialized.current = true;
@@ -105,10 +107,9 @@ const useChat = ({ chatId }: Props) => {
       id: TEMP_ASSISTANT_MESSAGE_ID,
       role: 'ASSISTANT',
       content: '',
+      stepResult: null,
       createdAt: dayjs().toISOString(),
     });
-    setPhase('PLANNING');
-    setPhaseMessage('요구사항을 분석하고 있어요');
 
     const url = BASE_URL + `/v1/chats/${chatId}/stream`;
     const eventSource = new EventSourcePolyfill(url, {
@@ -129,7 +130,7 @@ const useChat = ({ chatId }: Props) => {
       setPhase(newPhase);
       setPhaseMessage(chatStream.status.message);
 
-      if (newPhase === 'COMPLETED') {
+      if (newPhase === 'CLOSED') {
         handleSSEClose(eventSource);
       } else if (newPhase === 'FAILED') {
         handleSSEClose(eventSource);

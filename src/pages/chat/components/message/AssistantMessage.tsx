@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import Tabs from 'src/components/Tabs';
 import TextTab from './TextTab';
-import ChartTab from './ChartTab';
 import { ExecutionPhase, Message } from 'src/types/chat.type';
 import LoadingPhase from './LoadingPhase';
+import SourceTab from './SourceTab';
 
-type ChatTab = 'text' | 'chart';
+type ChatTab = 'text' | 'source';
 
 interface Props {
   message: Message;
@@ -24,9 +24,12 @@ const AssistantMessage = ({ message, phase, phaseMessage }: Props) => {
 
   return (
     <article className='mb-48 flex flex-col gap-8 border-b border-grey-200 pb-24'>
-      <div className='w-[150px]'>
+      <div className='w-300'>
         <Tabs
-          items={[{ label: '답변', value: 'text' }]}
+          items={[
+            { label: '답변', value: 'text' },
+            { label: '출처', value: 'source' },
+          ]}
           selected={selected}
           onSelect={setSelected}
           disabled={isGenerating}
@@ -37,7 +40,7 @@ const AssistantMessage = ({ message, phase, phaseMessage }: Props) => {
           (selected === 'text' ? (
             <TextTab text={message.content} />
           ) : (
-            <ChartTab />
+            <SourceTab text={message.stepResult} />
           ))}
         {isGenerating && (
           <LoadingPhase phase={phase} phaseMessage={phaseMessage} />

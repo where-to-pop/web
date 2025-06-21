@@ -13,6 +13,7 @@ export const ExecutionPhaseEnum = z.enum([
   'AGGREGATING', // 결과 통합 중
   'COMPLETED', // 전체 실행 완료
   'FAILED', // 전체 실행 실패
+  'CLOSED', // 스트리밍 종료
 ]);
 export type ExecutionPhase = z.infer<typeof ExecutionPhaseEnum>;
 
@@ -33,6 +34,7 @@ export const MessageSchema = z.object({
   id: z.string(),
   role: RoleEnum,
   content: z.string(),
+  stepResult: z.string().nullable(),
   createdAt: z.string(),
 });
 export type Message = z.infer<typeof MessageSchema>;
